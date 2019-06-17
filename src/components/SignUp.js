@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Link,
@@ -30,7 +30,6 @@ const useStyles = makeStyles(theme => ({
     },
   },
   paper: {
-    marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -49,9 +48,10 @@ const SpecialFields = (props) => {
   const [labelWidth, setLabelWidth] = React.useState(0);
   const [selectedDate, handleDateChange] = useState(null);
   const inputLabel = React.useRef(null);
-  React.useEffect(() => {
+  useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
+
   const errorBirthday = Boolean(props.errors.birthday);
   const errorGender = Boolean(props.errors.gender);
   return (
@@ -70,8 +70,8 @@ const SpecialFields = (props) => {
             error={ errorBirthday }
             value={ selectedDate }
             onChange={ date => {
-              props.changeValue({ name: 'birthday', value: moment(selectedDate).format('YYYY-MM-DD') });
               handleDateChange(date);
+              props.changeValue({ name: 'birthday', value: moment(date).format('YYYY-MM-DD') });
             } }
           />
         </MuiPickersUtilsProvider>
@@ -137,7 +137,7 @@ const Fields = (props) => {
   );
 };
 
-const SignUp = () =>  {
+const SignUp = (props) =>  {
   const fields = {
     email: '',
     password: '',
@@ -148,7 +148,7 @@ const SignUp = () =>  {
     socialLink: ''
   };
   const [stage, setStage] = useState(0);
-  const [user, setUser] = useState(fields);
+  const [user, setUser] = useState({ ...fields });
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({ ...fields, passwordConfirm: ''});
   const classes = useStyles();
@@ -212,6 +212,7 @@ const SignUp = () =>  {
     if(newErrors) return setErrors(newErrors);
     const result = await handleFetch(addUsersData, user);
     await handleFetch(sendEmailConfirm, { id: result.id });
+    window.location.replace('/')
   };
 
   return (
@@ -219,7 +220,7 @@ const SignUp = () =>  {
       <CssBaseline />
       <div className={ classes.paper }>
         <Typography component='h1' variant='h5'>
-          Sign up
+          {props.name}
         </Typography>
         <form className={ classes.form } noValidate>
           <Grid container spacing={2}>
@@ -236,7 +237,7 @@ const SignUp = () =>  {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link href='#' variant='body2'>
+              <Link variant='body2' onClick={() => props.changeStage('signIn')}>
                 Already have an account? Sign in
               </Link>
             </Grid>
@@ -253,7 +254,7 @@ const fetchData = async (address, data) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data)
+    body: data
   });
   return response.json();
 };
