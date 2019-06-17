@@ -38,10 +38,13 @@ export default class SignInController extends React.Component {
             headers: {
                 "Content-type": "application/json"
             }
-        });
+
+        }
+        );
 
         const dataResponse = await response.json();
         localStorage.setItem('token', dataResponse.token);
+        this.props.setAuth(true);
     }
 
     render() {
@@ -50,6 +53,7 @@ export default class SignInController extends React.Component {
                        onHandleSubmitForm={this.handleSubmitForm}
                        inputEmail={this.state.inputEmail}
                        inputPassword={this.state.inputPassword}
+                       auth={this.props.auth}
         />
     }
 }

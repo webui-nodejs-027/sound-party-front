@@ -99,7 +99,7 @@ const MainWindow = (props) => {
   );
 
   const routes = props.routes.map( (route, i) => (
-    <RouteWithSubRoutes key={ i } {...route} parentData={{name: search}} />
+    <RouteWithSubRoutes key={ i } {...route} parentData={{auth: props.auth, setAuth: props.setAuth}} />
   ));
 
   return (

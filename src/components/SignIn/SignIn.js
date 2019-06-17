@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {makeStyles} from "@material-ui/core";
 import React from "react";
+import {Redirect} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -42,10 +43,10 @@ const SignIn = (props) => {
         onHandleChangeEmail,
         onHandleSubmitForm
     } = props;
-
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
+            {props.auth ? <Redirect to='/main' /> : null}
             <div className={classes.paper}>
                 <Typography component="h1" variant="h5">
                     Sign in

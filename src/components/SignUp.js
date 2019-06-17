@@ -254,7 +254,7 @@ const fetchData = async (address, data) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: data
+    body: JSON.stringify(data)
   });
   return response.json();
 };

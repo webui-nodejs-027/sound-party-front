@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   BrowserRouter as Router,
   Switch
@@ -8,9 +8,12 @@ import RouteWithSubRoutes from './components/RouteWithSubRoutes';
 import config from './routerConfig';
 
 function App() {
+  const [ isAuthentificated, setIsAuthentificated ] = useState(false);
   const routes = config.map( (route, i) => {
     return (
-      <RouteWithSubRoutes key={ i } { ...route }/>
+      <RouteWithSubRoutes key={ i } { ...route } parentData={{
+        auth: isAuthentificated,
+        setAuth: setIsAuthentificated}}/>
     );
   });
 
