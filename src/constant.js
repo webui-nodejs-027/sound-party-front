@@ -1,13 +1,21 @@
-import React from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import { border } from '@material-ui/system';
+export const images = {
+  'friends' : {
+    url: './images/friends.png',
+    title: 'Find a new friends',
+    width: '70%',
+  },
+  'meetings' : {
+    url: './images/meetings.jpg',
+    title: 'Meet your friends',
+    width: '70%',
+  },
+};
 
 const gradients = [
   [
-    '#fc4a1a;',
-    '-webkit-linear-gradient(to right, #fc4a1a, #f7b733);',
-    'linear-gradient(to right, #fc4a1a, #f7b733);'
+    '#fc4a1a;', /* fallback for old browsers */
+    '-webkit-linear-gradient(to right, #fc4a1a, #f7b733);', /* Chrome 10-25, Safari 5.1-6 */
+    'linear-gradient(to right, #fc4a1a, #f7b733);' /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   ],
   [
     '#ff9966;',
@@ -48,42 +56,27 @@ const gradients = [
     '#dce35b;',
     '-webkit-linear-gradient(to right, #dce35b, #45b649);',
     'linear-gradient(to right, #dce35b, #45b649);'
+  ],
+  [
+    '#ee0979;',
+    '-webkit-linear-gradient(to right, #ee0979, #ff6a00);',
+    'linear-gradient(to right, #ee0979, #ff6a00);'
+  ],
+  [
+    '#a770ef;',
+    '-webkit-linear-gradient(to right, #a770ef, #cf8bf3, #fdb99b);',
+    'linear-gradient(to right, #a770ef, #cf8bf3, #fdb99b);'
+  ],
+  [
+    '#f4c4f3;',
+    '-webkit-linear-gradient(to right, #f4c4f3, #fc67fa);',
+    'linear-gradient(to right, #f4c4f3, #fc67fa);'
   ]
 ]
 
-const getRandomGradient = () => {
+export const getRandomGradient = () => {
   const gradientId = Math.floor(Math.random() * (gradients.length - 0)) + 0;
   return gradients[gradientId][2];
 }
 
-const ColorButton = withStyles(theme => ({
-  root: {
-    width: 'auto',
-    minWidth: 160,
-    height: 75,
-    fontSize: 24,
-    background: getRandomGradient,
-    // '&:hover': {
-    //   background: getRandomGradient,
-    // },
-  },
-}))(Button);
-
-const useStyles = makeStyles(theme => ({
-  margin: {
-    marginTop: 15,
-  },
-}));
-
-export default function GenreCard(props) {
-  const classes = useStyles();
-  console.log(props.genreName);
-
-  return (
-    <div>
-      <ColorButton variant="contained" color="primary" className={classes.margin}>
-        {props.genreName}
-      </ColorButton>
-    </div>
-  );
-}
+export default images;
