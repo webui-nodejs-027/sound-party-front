@@ -34,7 +34,7 @@ class GenreApp extends React.Component {
     const { elementsForView } = this.state;
     return (
       <div className="GenreBlock">
-        <ul style={{ listStyle: "none" }}>
+        <ul style={{ listStyle: "none", border: '1px solid black' }}>
           <Grid container spacing={3}>
             {elementsForView}
           </Grid>
