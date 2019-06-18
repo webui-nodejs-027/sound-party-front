@@ -12,7 +12,7 @@ class MainCardApp extends React.Component {
       <div className="mainCardsBlock">
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6}>
-            <Link to='/main/findpeople/'>
+            <Link to='/main/findpeople'>
               <CardTemplate cardType='friends'/>
             </Link>
           </Grid>

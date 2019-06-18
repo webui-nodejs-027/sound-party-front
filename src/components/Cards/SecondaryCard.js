@@ -22,8 +22,7 @@ const useStyles = makeStyles(theme => ({
 export default function SecondaryCard(props) {
   const classes = useStyles();
   const height = props.height || 75;
-  const width = props.width || 'auto'
-  console.log(props, 'Just Here!!!');
+  const width = props.width || 'auto';
 
   return (
     <div>

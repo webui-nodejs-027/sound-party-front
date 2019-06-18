@@ -31,7 +31,6 @@ class GenreApp extends React.Component {
       );
     }
     await this.setState({ elementsForView: result });
-    console.log(this.state);
   };
 
   render() {

@@ -103,7 +103,6 @@ const MainWindow = (props) => {
 
   useEffect(() => {
     getUser()
-      .then( data => console.log(data))
       .catch(err => console.log(err));
   }, []);
 
@@ -123,7 +122,10 @@ const MainWindow = (props) => {
                     <Divider />
                     <List>
                         <ListItem>
-                            <Link to='/main/findpeople/2' className={classes.link}>Find People</Link>
+                            <Link to='/main/findpeople' className={classes.link}>Find People</Link>
+                        </ListItem>
+                        <ListItem>
+                            <Link to='/main/songs' className={classes.link}>Songs</Link>
                         </ListItem>
                     </List>
                     <Divider />
