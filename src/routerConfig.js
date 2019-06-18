@@ -33,7 +33,7 @@ const config = [
             },
             {
                 name: 'FindPeople',
-                path: '/main/findpeople/:id',
+                path: '/main/findpeople',
                 component: FindPeople
             },
             {

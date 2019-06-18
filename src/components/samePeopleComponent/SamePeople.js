@@ -23,23 +23,38 @@ export default class SamePeople extends React.Component {
                 },
                 sameMusicPercent: null,
                 songs: []
-            }]
+            }],
+            errorState: false,
         }
     }
 
     async componentDidMount() {
-        const userId = this.props.match.params.id;
-        const responseUsers = await fetch('http://localhost:3001/api/users/getUsersPercent/' + userId);
+        const responseUsers = await fetch('http://localhost:3001/api/users/getUsersPercent',{
+            headers : {
+                Authorization : localStorage.getItem('token')
+            }
+        });
         const dataResponseUsers = await responseUsers.json();
-
-        console.log(responseUsers);
-        console.log(dataResponseUsers);
+        if(responseUsers.status === 400){
+            this.setState({
+                errorState : true
+            });
+        }
         this.setState({
             sameUsers: dataResponseUsers
         });
 
-        const responseMyStats = await fetch('http://localhost:3001/api/users/getUsersMusicStats/' + userId);
+        const responseMyStats = await fetch('http://localhost:3001/api/users/getUsersMusicStats',{
+            headers : {
+                Authorization : localStorage.getItem('token')
+            }
+        });
         const dataResponseMyStats = await responseMyStats.json();
+        if(responseMyStats.status === 400){
+            this.setState({
+                errorState : true
+            });
+        }
         this.setState({
             myStats: dataResponseMyStats
         });
@@ -50,18 +65,25 @@ export default class SamePeople extends React.Component {
     }
 
     render() {
-        console.log(this.state.sameUsers);
-        const peopleView = this.state.sameUsers.map((value, index) => {
-            return this.renderPeopleView(index);
-        });
+        if (this.state.errorState) {
+            return (<>
+                <h2 className='h2-genre'>Add music please</h2>
+            </>)
+        }
+        else {
+            console.log(this.state.sameUsers);
+            const peopleView = this.state.sameUsers.map((value, index) => {
+                return this.renderPeopleView(index);
+            });
 
-        return (
-            <>
-                <h2 className='h2-genre'>My stats </h2>
-                <div className='genre-card__container'>
-                    <SameGanreSong user={this.state.myStats[0]}/>
-                </div>
-                {peopleView}
-            </>);
+            return (
+                <>
+                    <h2 className='h2-genre'>My stats </h2>
+                    <div className='genre-card__container'>
+                        <SameGanreSong user={this.state.myStats[0]}/>
+                    </div>
+                    {peopleView}
+                </>);
+        }
     }
 }
