@@ -56,7 +56,6 @@ const Header = (props) => {
 
   const handleSignOut = () => {
     localStorage.removeItem('token');
-    window.location.replace('/');
   };
 
   return (
@@ -79,7 +78,6 @@ const Header = (props) => {
       </Grid>
       <Grid item>
         <Link
-          onClick={() => localStorage.removeItem('token')}
           component={RouterLink}
           to='/main/profile' >
         <IconButton
