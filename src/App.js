@@ -1,18 +1,32 @@
-import React, { Component } from 'react';
-import Routes from './routes'
+import React, {useState} from 'react';
+import {
+  BrowserRouter as Router,
+  Switch
+} from 'react-router-dom';
+import { CssBaseline } from '@material-ui/core';
+import RouteWithSubRoutes from './components/RouteWithSubRoutes';
+import config from './routerConfig';
 
-
-
-class App extends Component {
-
-  render() {
+function App() {
+  const [ isAuthentificated, setIsAuthentificated ] = useState(false);
+  const routes = config.map( (route, i) => {
     return (
-        <div>
-          <Routes />
-        </div>
+      <RouteWithSubRoutes key={ i } { ...route } parentData={{
+        auth: isAuthentificated,
+        setAuth: setIsAuthentificated}}/>
     );
-}
+  });
+
+  return (
+      <Router>
+        <CssBaseline />
+        <Switch>
+          { routes }
+        </Switch>
+      </Router>
+  );
 }
   
+
 
 export default App;

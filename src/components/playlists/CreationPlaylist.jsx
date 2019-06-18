@@ -23,7 +23,16 @@ class CreationPlaylist extends Component {
       open: false,
       name: ""
     };
+    this.getUserId = this.getUserId.bind(this);
   }
+
+  
+  getUserId = () => {
+    const payload = localStorage
+      .getItem('token')
+      .split('.')[1];
+    return JSON.parse(atob(payload)).id;
+  };
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -43,7 +52,7 @@ class CreationPlaylist extends Component {
       name: this.state.name,
       isMain: false,
       favourite: false,
-      userId: 1
+      userId: this.getUserId()
     });
     this.handleClose();
   };
