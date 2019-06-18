@@ -83,6 +83,15 @@ const MainWindow = (props) => {
         email: '',
         gender: ''
     });
+    const [electItem, setElectItem] = useState({
+        typeName: null,
+        itemId: null,
+        itemName: null
+    });
+
+    const handleElectItemSetter = (item) => {
+        setElectItem(item)
+    }
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -111,9 +120,20 @@ const MainWindow = (props) => {
         </div>
     );
 
-    const routes = props.routes.map((route, i) => (
-        <RouteWithSubRoutes key={i} {...route} parentData={{auth: props.auth, setAuth: props.setAuth}}/>
-    ));
+    const routes = props.routes.map((route, i) => {
+        let parentData = {auth: props.auth, setAuth: props.setAuth};
+        switch (route.name) {
+            case 'MainPage':
+                parentData = {...parentData, handleElectItemSetter:{handleElectItemSetter}}
+                break;
+            case 'Explore':
+                    parentData = {...parentData, electItem: electItem}
+                    break;
+            default:
+                break;    
+        }
+        return <RouteWithSubRoutes key={i} {...route} parentData={parentData}/>
+    });
 
     return (
         <div className={classes.root}>

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 
 class GenreApp extends React.Component {
+  typeName = 'genre'
   state = {
     elementsForView: null
   };
@@ -23,7 +24,9 @@ class GenreApp extends React.Component {
           <li>
             <GenreCard itemName={genres.data[i].name}
             itemId={genres.data[i].id}
+            typeName={this.typeName}
             height = {120} width='100%'
+            handleElectItemSetter={this.props.handleElectItemSetter}
           />
           </li>
           </Link>
@@ -39,7 +42,7 @@ class GenreApp extends React.Component {
     return (
       <div className="GenreBlock">
           <h2 style={{textAlign:'center', fontSize:'35px',marginTop:'15px'}}> Genres </h2>
-        <ul style={{ listStyle: "none", height: 150 }}>
+        <ul style={{ listStyle: "none", height: 150, padding: "0px 40px" }}>
           <Grid container justify="center" spacing={3}>
             {elementsForView}
           </Grid>

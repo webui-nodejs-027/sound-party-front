@@ -3,22 +3,22 @@ import AuthorCard from "../Cards/SecondaryCard";
 import Grid from "@material-ui/core/Grid";
 import {Link} from "react-router-dom";
 
-class AuthorApp extends React.Component {
+class Explore extends React.Component {
   state = {
-    elementsForView: null
+    elementsForTable: null
   };
 
   async componentDidMount() {
-    const authors = await this.getAuthors();
+    const songsByItemType = await this.getDataByItem(this.props.electItem.typeName);
     this.setElementsForView(authors);
   }
 
-  setElementsForView = async (authors) => {
+  setElementsForTable = async (authors) => {
     const result = [];
     for (let i = 0; i < authors.data.length; i++) {
       result[i] = (
         <Grid key={authors.data[i].id} item xs={12} sm={6} md={2}>
-            <Link style={{textDecoration: 'none'}} to="/exploreGenres">
+            <Link style={{textDecoration: 'none'}} to="/explore">
           <li>
             <AuthorCard
             itemName={authors.data[i].name}
@@ -38,7 +38,7 @@ class AuthorApp extends React.Component {
     return (
       <div className="AuthorBlock">
           <h2 style={{textAlign:'center', fontSize:'35px',marginTop:'30px'}}> Authors </h2>
-        <ul style={{ listStyle: "none", height: 'auto'}}>
+        <ul style={{ listStyle: "none", height: 'auto', padding: '0px 40px'}}>
           <Grid container justify='center' spacing={3}>
             {elementsForView}
           </Grid>
@@ -48,10 +48,18 @@ class AuthorApp extends React.Component {
   }
 
   getAuthors = async () => {
-    const response = await fetch("http://localhost:3001/api/authors/");
+    const response = await fetch('http://localhost:3001/api/authors/');
     const res = await response.json();
     return res;
   };
+
+  getDataByItem = async (typeName) => {
+    let url;
+    switch(typeName){
+      case 'genre':
+          http://localhost:3001/api/authors/
+    }
+  }
 }
 
-export default AuthorApp;
+export default Explore;

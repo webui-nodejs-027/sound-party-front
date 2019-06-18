@@ -39,5 +39,3 @@ class Routes extends React.Component {
 }
 
 export default Routes
-
- //render={(props)=><Home user={user} {..props}/>}

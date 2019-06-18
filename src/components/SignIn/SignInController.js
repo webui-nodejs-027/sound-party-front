@@ -6,7 +6,7 @@ export default class SignInController extends React.Component {
         super(props);
         this.state = {
             inputEmail: 'test@gmail.com',
-            inputPassword: '123321Anton',
+            inputPassword: '12345678    ',
         };
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
