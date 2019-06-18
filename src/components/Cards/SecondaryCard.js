@@ -17,19 +17,19 @@ const useStyles = makeStyles(theme => ({
   margin: {
     marginTop: 15,
   },
-}));
+}));  
 
-export default function GenreCard(props) {
+export default function SecondaryCard(props) {
   const classes = useStyles();
-  console.log('Genre props:', props);
   const height = props.height || 75;
   const width = props.width || 'auto'
-
+  console.log(props, 'Just Here!!!');
 
   return (
     <div>
       <ColorButton variant="contained" color="primary" 
       className={classes.margin} 
+      onClick={()=>props.handleChangeElectElement(props.itemId)}
       style={{'height' : height , 'width' : width}}>
         {props.itemName}
       </ColorButton>

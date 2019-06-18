@@ -2,12 +2,12 @@ export const images = {
   'friends' : {
     url: './images/friends.png',
     title: 'Find a new friends',
-    width: '70%',
+    width: '80%',
   },
   'meetings' : {
     url: './images/meetings.jpg',
     title: 'Meet your friends',
-    width: '70%',
+    width: '80%',
   },
 };
 

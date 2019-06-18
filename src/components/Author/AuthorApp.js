@@ -18,7 +18,11 @@ class AuthorApp extends React.Component {
       result[i] = (
         <Grid key={authors.data[i].id} item xs={12} sm={6} md={3}>
           <li>
-            <AuthorCard itemName={authors.data[i].name} height={100} width={200}/>
+            <AuthorCard 
+            itemName={authors.data[i].name} 
+            itemId={authors.data[i].id}
+            handleChangeElectElement={this.props.handleChangeElectElement}
+            height={100} width={200}/>
           </li>
         </Grid>
       );

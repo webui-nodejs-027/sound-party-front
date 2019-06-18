@@ -2,19 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
-
-const images = {
-  'friends' : {
-    url: './images/friends.png',
-    title: 'Find a new friends',
-    width: '70%',
-  },
-  'meetings' : {
-    url: './images/meetings.jpg',
-    title: 'Meet your friends',
-    width: '70%',
-  },
-};
+import {images} from '../../constant'
 
 const useStyles = makeStyles(theme => ({
   root: {

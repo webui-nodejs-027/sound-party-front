@@ -1,10 +1,10 @@
 import React from 'react';
-import GenreApp from './components/Genre/GenreApp'
+import Routes from './routes';
 
 function App() {
   return (
     <div className="App" style = {{width:'60%' , margin: '0 auto'}}>
-      <GenreApp/>
+      <Routes/>
     </div>
   );
 }

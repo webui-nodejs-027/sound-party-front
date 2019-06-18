@@ -1,6 +1,7 @@
 import React from "react";
 import GenreCard from "../Cards/SecondaryCard";
 import Grid from "@material-ui/core/Grid";
+import { Link } from 'react-router-dom'
 
 class GenreApp extends React.Component {
   state = {
@@ -17,9 +18,14 @@ class GenreApp extends React.Component {
     for (let i = 0; i < 4; i++) {
       result[i] = (
         <Grid key={genres.data[i].id} item xs={12} sm={6} md={3}>
+          <Link to="/exploreGenres">
           <li>
-            <GenreCard itemName={genres.data[i].name} height = {80} width={200} />
+            <GenreCard itemName={genres.data[i].name} 
+            itemId={genres.data[i].id} 
+            height = {80} width={200}
+            handleChangeElectElement={this.props.handleChangeElectElement}/>
           </li>
+          </Link>
         </Grid>
       );
     }
