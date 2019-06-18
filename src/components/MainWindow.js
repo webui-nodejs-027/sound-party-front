@@ -89,12 +89,10 @@ const MainWindow = (props) => {
   const getUser = async () => {
     const id = getUserId();
     const address = `http://localhost:3001/api/users/${id}`;
-    console.log(localStorage.getItem('token'));
     const response = await fetch( address, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': localStorage.getItem('token')
       }
     });
     const userData = await response.json();

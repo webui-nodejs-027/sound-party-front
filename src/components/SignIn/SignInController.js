@@ -43,9 +43,7 @@ export default class SignInController extends React.Component {
         );
 
         const dataResponse = await response.json();
-        console.log(dataResponse.token);
         localStorage.setItem('token', dataResponse.token);
-        console.log(localStorage.getItem('token'));
         this.props.setAuth(true);
     }
 
