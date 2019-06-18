@@ -8,7 +8,6 @@ fetchIntercept.register({
   request: function (url, config) {
     // Modify the url or config here
     const headers = {
-      ...config.headers,
       'Content-Type': 'application/json',
       'Authorization': localStorage.getItem('token')
     };

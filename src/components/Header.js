@@ -79,7 +79,6 @@ const Header = (props) => {
       </Grid>
       <Grid item>
         <Link
-          onClick={() => localStorage.removeItem('token')}
           component={RouterLink}
           to='/main/profile' >
         <IconButton
