@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   AppBar,
   CssBaseline,
@@ -78,6 +78,34 @@ const MainWindow = (props) => {
     email: '',
     gender: ''
   });
+  const getUserId = () => {
+    const payload = localStorage
+      .getItem('token')
+      .split('.')[1];
+    return JSON.parse(atob(payload)).id;
+  };
+
+  //Should be changed(userID)
+  const getUser = async () => {
+    const id = getUserId();
+    const address = `http://localhost:3001/api/users/${id}`;
+    const response = await fetch( address, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const userData = await response.json();
+    delete userData.id;
+    delete userData.roleId;
+    setUser(userData);
+  };
+
+  useEffect(() => {
+    getUser()
+      .then( data => console.log(data))
+      .catch(err => console.log(err));
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -99,7 +127,7 @@ const MainWindow = (props) => {
   );
 
   const routes = props.routes.map( (route, i) => (
-    <RouteWithSubRoutes key={ i } {...route} parentData={{auth: props.auth, setAuth: props.setAuth}} />
+    <RouteWithSubRoutes key={ i } {...route} parentData={{auth: props.auth, setAuth: props.setAuth, user: user}} />
   ));
 
   return (
