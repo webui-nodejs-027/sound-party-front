@@ -20,11 +20,6 @@ const config = [
     component: MainWindow,
     routes: [
       {
-        name: 'Signup',
-        path: '/main/signup',
-        component: SignUp
-      },
-      {
         name: 'Profile',
         path: '/main/profile',
         component: Profile

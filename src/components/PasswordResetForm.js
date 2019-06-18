@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Grid, TextField } from "@material-ui/core";
+import { Button, Grid, TextField, Link } from "@material-ui/core";
 import Typography from "./SignIn/SignIn";
 
 const PasswordResetForm = (props) => {
@@ -49,6 +49,11 @@ const PasswordResetForm = (props) => {
         >
           Reset password
         </Button>
+        </Grid>
+        <Grid item >
+          <Link href="#" variant="body2" onClick={() => props.changeStage('signIn')}>
+            Back to sign in
+          </Link>
         </Grid>
       </Grid>
   );

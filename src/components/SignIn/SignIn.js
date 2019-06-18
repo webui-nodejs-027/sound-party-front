@@ -89,12 +89,12 @@ const SignIn = (props) => {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
+                            <Link href="#" variant="body2" onClick={() => props.changeStage('resetPassword')}>
                                 Forgot password?
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="#" variant="body2" onClick={() => props.changeStage('signUp')}>
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>

@@ -118,9 +118,9 @@ const MainWindow = (props) => {
                     </div>
                     <Divider />
                     <List>
-                      <ListItem>
-                        <Link to='/main/signup' className={classes.link}>signup</Link>
-                      </ListItem>
+                      {/*<ListItem>*/}
+                        {/*<Link to='/main/signup' className={classes.link}>signup</Link>*/}
+                      {/*</ListItem>*/}
                     </List>
                     <Divider />
                   </div>
