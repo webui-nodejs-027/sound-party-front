@@ -92,7 +92,7 @@ const MainWindow = (props) => {
     const response = await fetch( address, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
     });
     const userData = await response.json();
@@ -126,6 +126,9 @@ const MainWindow = (props) => {
                         </ListItem>
                         <ListItem>
                             <Link to='/main/songs' className={classes.link}>Songs</Link>
+                        </ListItem>
+                        <ListItem>
+                            <Link to='/main/playlists' className={classes.link}>My playlists</Link>
                         </ListItem>
                     </List>
                     <Divider />

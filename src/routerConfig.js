@@ -3,6 +3,7 @@ import AuthWindow from './components/AuthWindow';
 import MainWindow from './components/MainWindow';
 import Profile from './components/Profile';
 import NotFound from './components/NotFound';
+import Playlists from './components/playlists/Playlist'
 import FindPeople from './components/SamePeopleComponent/SamePeople';
 import MainPage from './components/MainPage/MainPage';
 import Songs from './components/songs/index';
@@ -40,6 +41,11 @@ const config = [
                 name: 'FindPeople',
                 path: '/main/findpeople',
                 component: FindPeople
+            },
+            {
+                name: 'Playlist',
+                path: '/main/playlists',
+                component: Playlists
             }
         ]
     },
