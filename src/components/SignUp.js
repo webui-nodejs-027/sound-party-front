@@ -212,7 +212,7 @@ const SignUp = (props) =>  {
     if(newErrors) return setErrors(newErrors);
     const result = await handleFetch(addUsersData, user);
     await handleFetch(sendEmailConfirm, { id: result.id });
-    window.location.replace('/')
+    props.changeStage('signIn');
   };
 
   return (
@@ -220,7 +220,7 @@ const SignUp = (props) =>  {
       <CssBaseline />
       <div className={ classes.paper }>
         <Typography component='h1' variant='h5'>
-          {props.name}
+          Sign Up
         </Typography>
         <form className={ classes.form } noValidate>
           <Grid container spacing={2}>
@@ -237,7 +237,7 @@ const SignUp = (props) =>  {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link variant='body2' onClick={() => props.changeStage('signIn')}>
+              <Link variant='body2' href='#' onClick={() => props.changeStage('signIn')}>
                 Already have an account? Sign in
               </Link>
             </Grid>
