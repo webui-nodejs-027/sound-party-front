@@ -1,0 +1,103 @@
+body {
+    font-family: Roboto;
+}
+
+.rows-container, .game-info {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.hideText {
+    visibility: hidden
+}
+
+.blue {
+    font-size: 20px;
+    color: rgb(63, 81, 181);
+    font-weight: normal
+}
+
+.userSong-li {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+ul li {
+    list-style: none;
+}
+
+.information-user_ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 100%;
+    justify-content: center;
+}
+
+.information-user_ul li {
+    margin-left: 20px;
+    width: 33%;
+}
+
+.genre-card__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 40px 50px;
+}
+
+.h2-genre {
+    text-align: center;
+    margin: 30px;
+    font-size: 25px
+}
+
+.h2-genre_inside {
+    margin:15px 0;
+}
+
+.p-surname_name {
+    font-size: 1.5em;
+    font-weight: bold
+}
+
+.genre-card {
+    color: #e8e8ec;
+    margin-left: 30px;
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    text-align: center;
+    background: rgb(63, 81, 181);
+    border: 2px solid #191818;
+    border-radius: 10%;
+}
+
+.allWidth {
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.tab-top {
+    background: #5757b317;
+}
+
+.tab-bottom {
+    background: #5757b317;
+    border-top: 4px solid white;
+}
+
+

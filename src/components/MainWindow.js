@@ -93,6 +93,9 @@ const MainWindow = (props) => {
                       <ListItem>
                         <Link to='/main/signup' className={classes.link}>signup</Link>
                       </ListItem>
+                        <ListItem>
+                            <Link to='/main/findpeople/2' className={classes.link}>Find People</Link>
+                        </ListItem>
                     </List>
                     <Divider />
                   </div>
