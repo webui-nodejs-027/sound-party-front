@@ -3,6 +3,7 @@ import GenreCard from "../Cards/SecondaryCard";
 import Grid from "@material-ui/core/Grid";
 import { Link } from 'react-router-dom'
 
+
 class GenreApp extends React.Component {
   state = {
     elementsForView: null
@@ -15,15 +16,15 @@ class GenreApp extends React.Component {
 
   setElementsForView = async genres => {
     const result = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < genres.data.length; i++) {
       result[i] = (
-        <Grid key={genres.data[i].id} item xs={12} sm={6} md={3}>
-          <Link to="/exploreGenres">
+        <Grid key={genres.data[i].id} item xs={12} sm={6} md={2}>
+          <Link style={{textDecoration: 'none'}} to="/exploreGenres">
           <li>
-            <GenreCard itemName={genres.data[i].name} 
-            itemId={genres.data[i].id} 
-            height = {80} width={200}
-            handleChangeElectElement={this.props.handleChangeElectElement}/>
+            <GenreCard itemName={genres.data[i].name}
+            itemId={genres.data[i].id}
+            height = {120} width='100%'
+          />
           </li>
           </Link>
         </Grid>
@@ -37,8 +38,9 @@ class GenreApp extends React.Component {
     const { elementsForView } = this.state;
     return (
       <div className="GenreBlock">
-        <ul style={{ listStyle: "none", border: '1px solid black', height: 150 }}>
-          <Grid container spacing={3}>
+          <h2 style={{textAlign:'center', fontSize:'35px',marginTop:'15px'}}> Genres </h2>
+        <ul style={{ listStyle: "none", height: 150 }}>
+          <Grid container justify="center" spacing={3}>
             {elementsForView}
           </Grid>
         </ul>

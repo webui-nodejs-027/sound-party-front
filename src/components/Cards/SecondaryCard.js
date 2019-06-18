@@ -9,7 +9,7 @@ const ColorButton = withStyles(theme => ({
     minWidth: 160,
     //height: 75,
     fontSize: 24,
-    background: getRandomGradient,
+    background: 'linear-gradient(to right, rgb(69, 104, 220), rgb(176, 106, 179))',
   },
 }))(Button);
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   margin: {
     marginTop: 15,
   },
-}));  
+}));
 
 export default function SecondaryCard(props) {
   const classes = useStyles();
@@ -27,9 +27,8 @@ export default function SecondaryCard(props) {
 
   return (
     <div>
-      <ColorButton variant="contained" color="primary" 
-      className={classes.margin} 
-      onClick={()=>props.handleChangeElectElement(props.itemId)}
+      <ColorButton variant="contained" color="primary"
+      className={classes.margin}
       style={{'height' : height , 'width' : width}}>
         {props.itemName}
       </ColorButton>

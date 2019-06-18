@@ -8,11 +8,11 @@ export default class SamePeople extends React.Component {
         this.state = {
             sameUsers: [{
                 user: {
-                    id: null,
-                    firstName: null,
-                    lastName: null,
+                    id: '',
+                    firstName: '',
+                    lastName: '',
                 },
-                sameMusicPercent: null,
+                sameMusicPercent: '',
                 songs: []
             }],
             myStats: [{

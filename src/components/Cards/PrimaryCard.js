@@ -10,15 +10,15 @@ const useStyles = makeStyles(theme => ({
     flexWrap: 'wrap',
     justifyContent : 'center',
     alignContent : 'center',
-    minWidth: 300,
+    minWidth: 200,
     width: '100%',
   },
   image: {
     position: 'relative',
-    height: 200,
+    height: 300,
     [theme.breakpoints.down('xs')]: {
       width: '100% !important', // Overrides inline-style
-      height: 100,
+      height: 200,
     },
     '&:hover, &$focusVisible': {
       zIndex: 1,
@@ -80,7 +80,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function MainCard(props) {
-  console.log(props)
   const classes = useStyles();
   const cardType = props.cardType;
 
@@ -117,4 +116,4 @@ export default function MainCard(props) {
         </ButtonBase>
     </div>
   );
-} 
+}

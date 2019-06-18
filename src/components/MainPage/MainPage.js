@@ -7,10 +7,10 @@ class MainPage extends React.Component {
 
   render() {
     return (
-      <div className="MainBlock" style={{ border: '1px solid black', height: 'auto', marginTop : 20 }}>
+      <div className="MainBlock" >
         <MainCardApp/>
-        <GenreApp handleChangeElectElement = {this.props.handleChangeElectElement}/>
-        <AuthorApp handleChangeElectElement = {this.props.handleChangeElectElement}/>
+        <GenreApp/>
+        <AuthorApp/>
       </div>
     );
   }

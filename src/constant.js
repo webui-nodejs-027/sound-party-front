@@ -1,13 +1,13 @@
 export const images = {
   'friends' : {
-    url: './images/friends.png',
+      url: './images/meetings.jpg',
     title: 'Find a new friends',
-    width: '80%',
+    width: '90%',
   },
   'meetings' : {
-    url: './images/meetings.jpg',
+    url: './images/music-festival.jpg',
     title: 'Meet your friends',
-    width: '80%',
+    width: '90%',
   },
 };
 

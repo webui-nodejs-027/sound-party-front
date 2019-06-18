@@ -1,6 +1,7 @@
 import React from "react";
 import AuthorCard from "../Cards/SecondaryCard";
 import Grid from "@material-ui/core/Grid";
+import {Link} from "react-router-dom";
 
 class AuthorApp extends React.Component {
   state = {
@@ -14,21 +15,21 @@ class AuthorApp extends React.Component {
 
   setElementsForView = async (authors) => {
     const result = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < authors.data.length; i++) {
       result[i] = (
-        <Grid key={authors.data[i].id} item xs={12} sm={6} md={3}>
+        <Grid key={authors.data[i].id} item xs={12} sm={6} md={2}>
+            <Link style={{textDecoration: 'none'}} to="/exploreGenres">
           <li>
-            <AuthorCard 
-            itemName={authors.data[i].name} 
+            <AuthorCard
+            itemName={authors.data[i].name}
             itemId={authors.data[i].id}
-            handleChangeElectElement={this.props.handleChangeElectElement}
-            height={100} width={200}/>
+            height={120} width={'100%'}/>
           </li>
+            </Link>
         </Grid>
       );
     }
     await this.setState({ elementsForView: result });
-    console.log(this.state);
   };
 
   render() {
@@ -36,8 +37,9 @@ class AuthorApp extends React.Component {
     const { elementsForView } = this.state;
     return (
       <div className="AuthorBlock">
-        <ul style={{ listStyle: "none", border: '1px solid black', height: 150}}>
-          <Grid container spacing={3}>
+          <h2 style={{textAlign:'center', fontSize:'35px',marginTop:'30px'}}> Authors </h2>
+        <ul style={{ listStyle: "none", height: 'auto'}}>
+          <Grid container justify='center' spacing={3}>
             {elementsForView}
           </Grid>
         </ul>
