@@ -56,6 +56,7 @@ const Header = (props) => {
 
   const handleSignOut = () => {
     localStorage.removeItem('token');
+    window.location.replace('/');
   };
 
   return (
