@@ -30,7 +30,7 @@ class Playlist extends Component {
 
   async getPlaylists(userId) {
     const responseJSON = await fetch(
-      `http://localhost:4000/api/playlists/${userId}`,
+      `http://localhost:3001/api/playlists/${userId}`,
       {
         method: "GET",
         headers: {
@@ -46,7 +46,7 @@ class Playlist extends Component {
     try {
       const body = JSON.stringify({ name: field });
       const response = await fetch(
-        `http://localhost:4000/api/playlists/${id}`,
+        `http://localhost:3001/api/playlists/${id}`,
         {
           method: "PUT",
           headers: {
@@ -67,7 +67,7 @@ class Playlist extends Component {
   async deletePlaylist({ id }) {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/playlists/${id}`,
+        `http://localhost:3001/api/playlists/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -88,7 +88,7 @@ class Playlist extends Component {
   async create({ name, isMain, favourite, userId }) {
     try {
       const body = JSON.stringify({ name, isMain, favourite, userId });
-      const response = await fetch(`http://localhost:4000/api/playlists`, {
+      const response = await fetch(`http://localhost:3001/api/playlists`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

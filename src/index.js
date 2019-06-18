@@ -14,7 +14,7 @@ fetchIntercept.register({
     };
     return [url, {
       ...config,
-      ...headers
+      headers
     }];
   },
 

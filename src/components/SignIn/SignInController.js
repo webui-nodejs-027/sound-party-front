@@ -32,7 +32,7 @@ export default class SignInController extends React.Component {
             email: this.state.inputEmail,
         };
 
-        const response = await fetch('http://localhost:4000/api/users/login', {
+        const response = await fetch('http://localhost:3001/api/users/login', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
