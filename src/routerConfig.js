@@ -13,7 +13,7 @@ const config = [
     path: '/',
     noredirect: true,
     exact: true,
-    component: SignIn,
+    component: AuthWindow,
   },
   {
     name: 'Main',

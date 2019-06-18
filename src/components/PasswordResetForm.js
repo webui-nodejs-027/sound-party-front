@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Button, Grid, TextField } from "@material-ui/core";
+import Typography from "./SignIn/SignIn";
 
-const PasswordResetForm = () => {
+const PasswordResetForm = (props) => {
   const [ email, setEmail ] = useState('');
   const [ errors, setErrors ] = useState(false);
   const [ message, setMessage ] = useState('');
@@ -17,11 +18,14 @@ const PasswordResetForm = () => {
     }
     setMessage(`Message was sent on ${email.email}`);
     setTimeout(() => {
-      window.location.replace('/');
+      props.changeStage('signIn');
     }, 1000)
   };
   return (
       <Grid container spacing={2} direction='column'>
+        <Grid >
+          <h2 style={{textAlign: 'center', margin: '0 0 30px 0'}}>Reset password</h2>
+        </Grid>
         <Grid item>
           <TextField
           variant='outlined'

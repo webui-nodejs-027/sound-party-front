@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Box, Paper } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core";
+import { Box, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import SignUp from './SignUp';
+import SignIn from './SignIn/SignInController';
 import PasswordResetForm from './PasswordResetForm';
 
 const useStyles = makeStyles( () => (
@@ -31,17 +32,19 @@ const useStyles = makeStyles( () => (
   }
 ));
 
-const AuthWindow = () => {
+const AuthWindow = (props) => {
   const classes = useStyles();
   const [ stage, setStage ] = useState('signIn');
   let form;
   switch (stage) {
     case 'signIn':
-      form = <PasswordResetForm />;
+      form = <SignIn changeStage={setStage} auth={props.auth} setAuth={props.setAuth}/>;
     break;
     case 'signUp':
       form = <SignUp changeStage={setStage}/>;
     break;
+    case 'resetPassword':
+      form = <PasswordResetForm changeStage={setStage}/>
   }
   return (
     <Box maxWidth='xl' className={ classes.box }>
