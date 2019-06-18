@@ -7,6 +7,7 @@ import Playlists from './components/playlists/Playlist'
 import FindPeople from './components/SamePeopleComponent/SamePeople';
 import MainPage from './components/MainPage/MainPage';
 import Songs from './components/songs/index';
+import Meeting from './components/Meeting/SearchM'
 
 const config = [
     {
@@ -46,7 +47,13 @@ const config = [
                 name: 'Playlist',
                 path: '/main/playlists',
                 component: Playlists
-            }
+            },
+            {
+                name: 'Meeting',
+                path: '/main/meting',
+                component: Meeting
+            },
+
         ]
     },
     {

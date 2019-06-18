@@ -130,6 +130,9 @@ const MainWindow = (props) => {
                         <ListItem>
                             <Link to='/main/playlists' className={classes.link}>My playlists</Link>
                         </ListItem>
+                        <ListItem>
+                            <Link to='/main/meting' className={classes.link}>Meetings</Link>
+                        </ListItem>
                     </List>
                     <Divider />
                   </div>

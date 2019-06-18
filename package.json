@@ -15,7 +15,8 @@
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-modular-audio-player": "1.1.5",
-    "react-scripts": "3.0.1"
+    "react-select": "^3.0.4",
+    "react-scripts": "2.1.8"
   },
   "scripts": {
     "start": "react-scripts start",
