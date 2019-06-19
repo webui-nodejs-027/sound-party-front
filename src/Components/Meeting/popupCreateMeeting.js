@@ -180,7 +180,7 @@ try {
         creatorId: 1 // переделать из юзера!!! this.getUserId()
     });
 
-    fetch('http://localhost:3000/api/meetings', {
+    fetch('http://localhost:3001/api/meetings', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

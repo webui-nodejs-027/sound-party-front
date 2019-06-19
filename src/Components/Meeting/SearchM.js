@@ -14,7 +14,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import './meetingStyleSheet.css'
 
 const customSelStyles = theme => ({
     custSel: {
@@ -158,7 +157,7 @@ class SearchM extends React.Component {
         const data = JSON.stringify({
            meetingId: meetingId
         });
-        fetch( `http://localhost:3000/api/users/${userId}/subscribeOnMeeting`,
+        fetch( `http://localhost:3001/api/users/${userId}/subscribeOnMeeting`,
             {
                 method: 'POST',
                 headers: {
@@ -198,7 +197,7 @@ class SearchM extends React.Component {
                 }
             });
             fetch(
-                `http://localhost:3000/api/meetings?${query}`
+                `http://localhost:3001/api/meetings?${query}`
             )
                 .then(res => res.json())
                 .then(res => {
@@ -226,7 +225,7 @@ class SearchM extends React.Component {
         });
 
         fetch(
-            `http://localhost:3000/api/meetings?${query}`
+            `http://localhost:3001/api/meetings?${query}`
         )
             .then(res => res.json())
             .then(res => {
@@ -250,7 +249,7 @@ class SearchM extends React.Component {
         });
 
         fetch(
-            `http://localhost:3000/api/meetings?${query}`
+            `http://localhost:3001/api/meetings?${query}`
         )
             .then(res=>res.json())
             .then(result => {
@@ -272,7 +271,7 @@ class SearchM extends React.Component {
                 }
             });
         fetch(
-            `http://localhost:3000/api/meetings?${query}`
+            `http://localhost:3001/api/meetings?${query}`
         )
             .then(res=>res.json())
             .then(result => {
@@ -319,7 +318,7 @@ class SearchM extends React.Component {
 
     componentDidMount() {
         fetch(
-            `http://localhost:3000/api/genres?page=1&limit=30`,
+            `http://localhost:3001/api/genres?page=1&limit=30`,
             {
                 method: 'GET'
             })
@@ -331,7 +330,7 @@ class SearchM extends React.Component {
             });
 
         fetch(
-            `http://localhost:3000/api/statuses?page=1&limit=30`,
+            `http://localhost:3001/api/statuses?page=1&limit=30`,
             {
                 method: 'GET'
             })
@@ -343,7 +342,7 @@ class SearchM extends React.Component {
             });
 
         fetch(
-            `http://localhost:3000/api/meetings?page=${this.state.page}&limit=${this.state.rowsPerPage}`
+            `http://localhost:3001/api/meetings?page=${this.state.page}&limit=${this.state.rowsPerPage}`
         )
             .then(res => res.json())
             .then(res => {

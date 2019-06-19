@@ -5,7 +5,7 @@ import AsyncSelect from 'react-select/async';
 export default class DropSelect extends Component {
 
     getPromiseOptions(inputValue) {
-        return fetch(`http://localhost:3000/api/${this.props.type}?limit=1000`)
+        return fetch(`http://localhost:3001/api/${this.props.type}?limit=1000`)
             .then(response=>response.json())
             .then(result=> {
 
