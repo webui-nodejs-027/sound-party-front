@@ -177,7 +177,7 @@ try {
         address: this.state.address,
         statusId: this.state.status.id,
         genreId: this.state.genre.id,
-        creatorId: 1 // переделать из юзера!!! this.getUserId()
+        creatorId: this.getUserId() //1
     });
 
     fetch('http://localhost:3001/api/meetings', {
@@ -189,6 +189,10 @@ try {
     })
         .then(res => res.json())
         .then(res => {
+            alert('Meeting was created');
+            this.setState({
+                open: false,
+            })
         })
 } catch(e){
      if(e.message === 'Cannot read property \'id\' of null')
