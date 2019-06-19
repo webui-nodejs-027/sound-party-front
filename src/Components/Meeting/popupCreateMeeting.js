@@ -177,7 +177,7 @@ try {
         address: this.state.address,
         statusId: this.state.status.id,
         genreId: this.state.genre.id,
-        creatorId: 1 // переделать из юзера!!! this.getUserId()
+        creatorId: this.getUserId() // переделать из юзера!!!
     });
 
     fetch('http://localhost:3001/api/meetings', {

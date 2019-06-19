@@ -152,8 +152,8 @@ class SearchM extends React.Component {
     }
 
     handleJoinMeeting( meetingId, index, e){
-        //const userId = this.getUserId();
-        const userId = 2;
+        const userId = this.getUserId();
+        //const userId = 2;
         const data = JSON.stringify({
            meetingId: meetingId
         });
