@@ -7,6 +7,8 @@ import Profile from './components/Profile';
 import NotFound from './components/NotFound';
 import FindPeople from './components/samePeopleComponent/SamePeople';
 import MainPage from './components/MainPage/MainPage';
+import Genres from './components/Genres/Genres';
+import Authors from './components/Authors/Authors';
 
 const config = [
     {
@@ -40,6 +42,16 @@ const config = [
                 name: 'MainPage',
                 path: '/main',
                 component: MainPage
+            },
+            {
+                name: 'Genre',
+                path: '/main/genres',
+                component: Genres
+            },
+            {
+                name: 'Author',
+                path: '/main/authors',
+                component: Authors
             }
         ]
     },

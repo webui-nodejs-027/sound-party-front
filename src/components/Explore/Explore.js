@@ -10,7 +10,7 @@ class Explore extends React.Component {
 
   async componentDidMount() {
     const songsByItemType = await this.getDataByItem(this.props.electItem.typeName);
-    this.setElementsForView(authors);
+    this.setElementsForView(songsByItemType);
   }
 
   setElementsForTable = async (authors) => {
@@ -47,18 +47,12 @@ class Explore extends React.Component {
     );
   }
 
-  getAuthors = async () => {
-    const response = await fetch('http://localhost:3001/api/authors/');
+  getDataByItem = async (typeName, itemId) => {
+    let url = `http://localhost:3001/api/songs/?page=1&limit=10&typeName=${typeName}&itemId=${itemId}`;
+    const response = await fetch(url);
     const res = await response.json();
     return res;
-  };
 
-  getDataByItem = async (typeName) => {
-    let url;
-    switch(typeName){
-      case 'genre':
-          http://localhost:3001/api/authors/
-    }
   }
 }
 

@@ -115,6 +115,12 @@ const MainWindow = (props) => {
                 <ListItem>
                     <Link to='/main/findpeople/2' className={classes.link}>Find People</Link>
                 </ListItem>
+                <ListItem>
+                    <Link to='/main/genres' className={classes.link}>Genres</Link>
+                </ListItem>
+                <ListItem>
+                    <Link to='/main/authors' className={classes.link}>Authors</Link>
+                </ListItem>
             </List>
             <Divider/>
         </div>
@@ -127,8 +133,8 @@ const MainWindow = (props) => {
                 parentData = {...parentData, handleElectItemSetter:{handleElectItemSetter}}
                 break;
             case 'Explore':
-                    parentData = {...parentData, electItem: electItem}
-                    break;
+                parentData = {...parentData, electItem: electItem}
+                break;
             default:
                 break;    
         }
