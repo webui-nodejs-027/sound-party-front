@@ -4,15 +4,15 @@ import {
     Select,
     MenuItem,
     Fab,
+    FormControlLabel
 } from '@material-ui/core';
 import EnhancedTable from './MeetingTable1'
 import SearchIcon from '@material-ui/icons/Search';
 import DropSelect from './AsyncSelect';
-// import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import PopupCreateMeeting from './popupCreateMeeting'
 import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const customSelStyles = theme => ({
@@ -34,15 +34,15 @@ const searchMStyles = theme => ({
 
 
 
-// const GreenCheckbox = withStyles({
-//     root: {
-//         color: green[400],
-//         '&$checked': {
-//             color: green[600],
-//         },
-//     },
-//     checked: {},
-// })(props => <Checkbox color="default" {...props} />);
+const GreenCheckbox = withStyles({
+    root: {
+        color: green[400],
+        '&$checked': {
+            color: green[600],
+        },
+    },
+    checked: {},
+})(props => <Checkbox color="default" {...props} />);
 
 class CustomSel extends React.Component {
 
@@ -133,19 +133,58 @@ class SearchM extends React.Component {
     };
 
     handleChangeShowOnlyCreated(e){
-        this.setState(state => {
-            return {
-                showOnlyCreatedMeetings: !state.showOnlyCreatedMeetings
+        let query = `http://localhost:3001/api/meetings?page=1&limit=${this.state.rowsPerPage}&sortBy=${this.state.sortBy.param}&order=${this.state.sortBy.order}&userId=1`;
+        let data = Object.entries(this.state.currentData);
+        data.forEach((item)=> {
+            if(item[1] !== null) {
+                query = `${query}&${item[0]}=${item[1].name}`;
             }
-        })
+        });
+        if(!this.state.showOnlyCreatedMeetings) {
+            query = `${query}&isCreator=true`
+        }
+        if(!this.state.showOnlyOwnMeetings){
+            this.setState({
+                showOnlyOwnMeetings: true
+            })
+        }
+        fetch(query)
+            .then(res => res.json())
+            .then(res => {
+                this.setState(state => {
+                    console.log('res from getCreated:',res);
+                    return {
+                        showOnlyCreatedMeetings: !state.showOnlyCreatedMeetings,
+                        meetingsData: res,
+                        page: 1,
+                    }
+                })
+            });
     }
 
     handleChangeShowOnlyOwn(e) {
-        this.setState(state => {
-            return {
-                showOnlyOwnMeetings: !state.showOnlyOwnMeetings
+        let query = `http://localhost:3001/api/meetings?page=1&limit=${this.state.rowsPerPage}&sortBy=${this.state.sortBy.param}&order=${this.state.sortBy.order}`;
+        let data = Object.entries(this.state.currentData);
+        data.forEach((item)=> {
+            if(item[1] !== null) {
+                query = `${query}&${item[0]}=${item[1].name}`;
             }
-        })
+        });
+        if(!this.state.showOnlyOwnMeetings) {
+           query = `${query}&userId=1`
+        }
+        fetch(query)
+            .then(res => res.json())
+            .then(res => {
+                this.setState(state => {
+                    console.log('res from getOwn:',res);
+                    return {
+                        showOnlyOwnMeetings: !state.showOnlyOwnMeetings,
+                        meetingsData: res,
+                        page: 1
+                    }
+                })
+            });
     }
 
     handleCreateClick(e) {
@@ -423,26 +462,26 @@ class SearchM extends React.Component {
                     genres={this.state.genres}
                     statuses={this.state.statuses}
                 />
-                {/*<FormControlLabel*/}
-                    {/*control={*/}
-                        {/*<GreenCheckbox*/}
-                            {/*checked={this.state.showOnlyOwnMeetings}*/}
-                            {/*onChange={this.handleChangeShowOnlyOwn}*/}
-                            {/*value="checkedG"*/}
-                        {/*/>*/}
-                    {/*}*/}
-                    {/*label="Show only mine"*/}
-                {/*/>*/}
-                {/*<FormControlLabel*/}
-                    {/*control={*/}
-                        {/*<GreenCheckbox*/}
-                            {/*checked={this.state.showOnlyCreatedMeetings}*/}
-                            {/*onChange={this.handleChangeShowOnlyCreated}*/}
-                            {/*value="checkedG"*/}
-                        {/*/>*/}
-                    {/*}*/}
-                    {/*label="Show only created by me"*/}
-                {/*/>*/}
+                <FormControlLabel
+                    control={
+                        <GreenCheckbox
+                            checked={this.state.showOnlyOwnMeetings}
+                            onChange={this.handleChangeShowOnlyOwn}
+                            value="checkedG"
+                        />
+                    }
+                    label="Show only mine"
+                />
+                <FormControlLabel
+                    control={
+                        <GreenCheckbox
+                            checked={this.state.showOnlyCreatedMeetings}
+                            onChange={this.handleChangeShowOnlyCreated}
+                            value="checkedG"
+                        />
+                    }
+                    label="Show only created by me"
+                />
             <EnhancedTable
                 rows={this.state.meetingsData ? this.state.meetingsData.data : []}
                 handleChangePage={this.handleChangePage}

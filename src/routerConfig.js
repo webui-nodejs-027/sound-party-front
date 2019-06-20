@@ -1,13 +1,13 @@
 import React from 'react';
-import AuthWindow from './components/AuthWindow';
-import MainWindow from './components/MainWindow';
-import Profile from './components/Profile';
-import NotFound from './components/NotFound';
-import Playlists from './components/playlists/Playlist'
-import FindPeople from './components/SamePeopleComponent/SamePeople';
-import MainPage from './components/MainPage/MainPage';
-import Songs from './components/songs/index';
-import Meeting from './components/Meeting/SearchM'
+import AuthWindow from './Components/AuthWindow';
+import MainWindow from './Components/MainWindow';
+import Profile from './Components/Profile';
+import NotFound from './Components/NotFound';
+import Playlists from './Components/playlists/Playlist'
+import FindPeople from './Components/SamePeopleComponent/SamePeople';
+import MainPage from './Components/MainPage/MainPage';
+import Songs from './Components/songs/index';
+import Meeting from './Components/Meeting/SearchM'
 
 const config = [
     {

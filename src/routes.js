@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import createBrowserHistory from 'history/createBrowserHistory';
 
-import MainPage from './components/MainPage/MainPage'
-import Tabs from './components/Tabs/TabsApp';
+import MainPage from './Components/MainPage/MainPage'
+import Tabs from './Components/Tabs/TabsApp';
 
 const history = createBrowserHistory();
 
