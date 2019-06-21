@@ -1,7 +1,8 @@
 import React from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import {getRandomGradient} from '../../constant';
+import { getRandomGradient } from '../../constant';
+import { Link } from 'react-router-dom'
 
 const ColorButton = withStyles(theme => ({
   root: {
@@ -27,17 +28,19 @@ export default function SecondaryCard(props) {
     itemId: props.itemId,
     itemName: props.itemName,
   }
-  console.log(props, 'Just Here!!!');
+  console.log('this props');
+  console.log(typeof props.handleElectItemSetter);
 
   return (
     <div>
-      <ColorButton variant="contained" color="primary"
-      className={classes.margin}
-      style={{'height' : height , 'width' : width}}
-      onClick={() => props.handleElectItemSetter(itemData)}
-      >
-        {props.itemName}
-      </ColorButton>
+        <ColorButton variant="contained" color="primary"
+          className={classes.margin}
+          style={{ 'height': height, 'width': width }}
+          onClick={() => { props.handleElectItemSetter(itemData) }}
+        >
+          {props.itemName}
+        </ColorButton>
+
     </div>
   );
 }

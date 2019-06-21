@@ -20,17 +20,17 @@ class GenreApp extends React.Component {
     for (let i = 0; i < genres.data.length; i++) {
       result[i] = (
         <Grid key={genres.data[i].id} item xs={12} sm={6} md={2}>
-          <Link style={{textDecoration: 'none'}} to="/exploreGenres">
+          <Link style={{ textDecoration: 'none' }} to="/main/explore">
           <li>
             <GenreCard itemName={genres.data[i].name}
-            itemId={genres.data[i].id}
-            typeName={this.typeName}
-            height = {120} width='100%'
-            handleElectItemSetter={this.props.handleElectItemSetter}
-          />
+              itemId={genres.data[i].id}
+              typeName={this.typeName}
+              height={120} width='100%'
+              handleElectItemSetter={this.props.handleElectItemSetter}
+            />
           </li>
           </Link>
-        </Grid>
+        </Grid >
       );
     }
     await this.setState({ elementsForView: result });
@@ -39,9 +39,10 @@ class GenreApp extends React.Component {
 
   render() {
     const { elementsForView } = this.state;
+    console.log(this.props);
     return (
       <div className="GenreBlock">
-          <h2 style={{textAlign:'center', fontSize:'35px',marginTop:'15px'}}> Genres </h2>
+        <h2 style={{ textAlign: 'center', fontSize: '35px', marginTop: '15px' }}> Genres </h2>
         <ul style={{ listStyle: "none", height: 150, padding: "0px 40px" }}>
           <Grid container justify="center" spacing={3}>
             {elementsForView}

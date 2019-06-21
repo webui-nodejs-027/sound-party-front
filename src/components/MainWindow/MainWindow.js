@@ -130,7 +130,7 @@ const MainWindow = (props) => {
         let parentData = {auth: props.auth, setAuth: props.setAuth};
         switch (route.name) {
             case 'MainPage':
-                parentData = {...parentData, handleElectItemSetter:{handleElectItemSetter}}
+                parentData = {...parentData, handleElectItemSetter}
                 break;
             case 'Explore':
                 parentData = {...parentData, electItem: electItem}

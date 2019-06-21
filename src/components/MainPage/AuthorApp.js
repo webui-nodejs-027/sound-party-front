@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import {Link} from "react-router-dom";
 
 class AuthorApp extends React.Component {
+  typeName = 'author';
   state = {
     elementsForView: null
   };
@@ -23,7 +24,9 @@ class AuthorApp extends React.Component {
             <AuthorCard
             itemName={authors.data[i].name}
             itemId={authors.data[i].id}
-            height={120} width={'100%'}/>
+            typeName={this.typeName}
+            height={120} width={'100%'}
+            handleElectItemSetter={this.props.handleElectItemSetter}/>
           </li>
             </Link>
         </Grid>
