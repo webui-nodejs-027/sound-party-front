@@ -8,6 +8,7 @@ import FindPeople from './components/SamePeopleComponent/SamePeople';
 import MainPage from './components/MainPage/MainPage';
 import Songs from './components/songs/index';
 import Meeting from './components/Meeting/SearchM'
+import CrudTables from "./components/Cruds/CrudTables";
 
 const config = [
     {
@@ -53,7 +54,11 @@ const config = [
                 path: '/main/meting',
                 component: Meeting
             },
-
+            {
+                name : 'CrudTables',
+                path : '/main/crud',
+                component : CrudTables
+            }
         ]
     },
     {

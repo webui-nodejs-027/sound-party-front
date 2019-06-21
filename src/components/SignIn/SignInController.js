@@ -1,5 +1,6 @@
 import React from 'react';
 import SignIn from './SignIn';
+import TextField from "@material-ui/core/TextField/TextField";
 
 export default class SignInController extends React.Component {
     constructor(props) {
@@ -7,6 +8,7 @@ export default class SignInController extends React.Component {
         this.state = {
             inputEmail: 'test@gmail.com',
             inputPassword: '123321Anton',
+            error: false
         };
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -38,11 +40,17 @@ export default class SignInController extends React.Component {
             headers: {
                 "Content-type": "application/json"
             }
-
         });
-        const dataResponse = await response.json();
-        localStorage.setItem('token', dataResponse.token);
-        this.props.setAuth(true);
+        if (response.status === 200) {
+            const dataResponse = await response.json();
+            localStorage.setItem('token', dataResponse.token);
+            this.props.setAuth(true);
+        }
+        else {
+            this.setState({
+                error : true,
+            })
+        }
     }
 
     render() {
@@ -50,6 +58,7 @@ export default class SignInController extends React.Component {
                        onHandleChangePassword={this.handleChangePassword}
                        onHandleSubmitForm={this.handleSubmitForm}
                        inputEmail={this.state.inputEmail}
+                       error={this.state.error}
                        inputPassword={this.state.inputPassword}
                        auth={this.props.auth}
                        changeStage={this.props.changeStage}
