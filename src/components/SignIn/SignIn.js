@@ -41,7 +41,8 @@ const SignIn = (props) => {
         inputPassword,
         onHandleChangePassword,
         onHandleChangeEmail,
-        onHandleSubmitForm
+        onHandleSubmitForm,
+        error
     } = props;
     return (
         <Container component="main" maxWidth="xs">
@@ -58,6 +59,7 @@ const SignIn = (props) => {
                         required
                         fullWidth
                         value={inputEmail}
+                        error={error}
                         onChange={onHandleChangeEmail}
                         id="email"
                         label="Email Address"
@@ -71,6 +73,7 @@ const SignIn = (props) => {
                         required
                         fullWidth
                         name="password"
+                        error={error}
                         onChange={onHandleChangePassword}
                         value={inputPassword}
                         label="Password"
@@ -89,12 +92,12 @@ const SignIn = (props) => {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
+                            <Link href="#" variant="body2" onClick={() => props.changeStage('resetPassword')}>
                                 Forgot password?
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="#" variant="body2" onClick={() => props.changeStage('signUp')}>
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>

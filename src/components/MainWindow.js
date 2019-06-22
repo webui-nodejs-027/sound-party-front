@@ -103,7 +103,6 @@ const MainWindow = (props) => {
 
   useEffect(() => {
     getUser()
-      .then( data => console.log(data))
       .catch(err => console.log(err));
   }, []);
 
@@ -114,16 +113,29 @@ const MainWindow = (props) => {
   const drawer = (
                   <div>
                     <div className={ classes.toolbar } >
-                      <h1 style={ { margin: 0 } }>Sound party</h1>
+                        <h1 style={{margin: 0}}>
+                            <Link style={{textDecoration: 'none' , color:'white'}} to='/main'>
+                                Sound party
+                            </Link>
+                        </h1>
                     </div>
                     <Divider />
                     <List>
-                      <ListItem>
-                        <Link to='/main/signup' className={classes.link}>signup</Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to='/main/playlists' className={classes.link}>My playlists</Link>
-                      </ListItem>
+                        <ListItem>
+                            <Link to='/main/findpeople' className={classes.link}>Find People</Link>
+                        </ListItem>
+                        <ListItem>
+                            <Link to='/main/songs' className={classes.link}>Songs</Link>
+                        </ListItem>
+                        <ListItem>
+                            <Link to='/main/playlists' className={classes.link}>My playlists</Link>
+                        </ListItem>
+                        <ListItem>
+                            <Link to='/main/meting' className={classes.link}>Meetings</Link>
+                        </ListItem>
+                        <ListItem>
+                            <Link to='/main/crud' className={classes.link}>Crud</Link>
+                        </ListItem>
                     </List>
                     <Divider />
                   </div>

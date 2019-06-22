@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
 import App from './App';
 import './index.css';
 import fetchIntercept from 'fetch-intercept';
 
 fetchIntercept.register({
   request: function (url, config) {
-    // Modify the url or config here
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': localStorage.getItem('token')
