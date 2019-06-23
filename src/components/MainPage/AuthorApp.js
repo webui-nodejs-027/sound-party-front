@@ -40,7 +40,6 @@ class AuthorApp extends React.Component {
   };
 
   render() {
-    console.log("render");
     const { elementsForView } = this.state;
     return (
       <div className="AuthorBlock" style={{ marginTop: '25px', height: 'auto'}}>

@@ -1,15 +1,17 @@
 import React from 'react';
 import AuthWindow from './components/AuthWindow';
-import MainWindow from './components/MainWindow/MainWindow';
-import SignUp from './components/SignUp';
-import SignIn from './components/SignIn/SignInController'
+import MainWindow from './components/MainWindow';
 import Profile from './components/Profile';
 import NotFound from './components/NotFound';
-import FindPeople from './components/samePeopleComponent/SamePeople';
+import Playlists from './components/playlists/Playlist'
+import FindPeople from './components/SamePeopleComponent/SamePeople';
 import MainPage from './components/MainPage/MainPage';
 import Genres from './components/MainPage/GenreApp';
 import Authors from './components/MainPage/AuthorApp';
 import Explore from './components/Explore/Explore';
+import Songs from './components/Songs/index';
+import Meeting from './components/Meeting/SearchM'
+import CrudTables from "./components/Cruds/CrudTables";
 
 const config = [
     {
@@ -17,7 +19,7 @@ const config = [
         path: '/',
         noredirect: true,
         exact: true,
-        component: SignIn,
+        component: AuthWindow,
     },
     {
         name: 'Main',
@@ -25,9 +27,10 @@ const config = [
         component: MainWindow,
         routes: [
             {
-                name: 'Signup',
-                path: '/main/signup',
-                component: SignUp
+                name: 'MainPage',
+                exact: true,
+                path: '/main',
+                component: MainPage
             },
             {
                 name: 'Profile',
@@ -35,15 +38,14 @@ const config = [
                 component: Profile
             },
             {
-                name: 'FindPeople',
-                path: '/main/findpeople/:id',
-                component: FindPeople
+                name: 'Songs',
+                path: '/main/songs',
+                component: Songs
             },
             {
-                name: 'MainPage',
-                path: '/main',
-                component: MainPage,
-                exact: true,
+                name: 'FindPeople',
+                path: '/main/findpeople',
+                component: FindPeople
             },
             {
                 name: 'Genre',
@@ -59,6 +61,21 @@ const config = [
                 name: 'Explore',
                 path: '/main/explore',
                 component: Explore
+            },
+            {
+                name: 'Playlist',
+                path: '/main/playlists',
+                component: Playlists
+            },
+            {
+                name: 'Meeting',
+                path: '/main/meting',
+                component: Meeting
+            },
+            {
+                name : 'CrudTables',
+                path : '/main/crud',
+                component : CrudTables
             }
         ]
     },

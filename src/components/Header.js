@@ -78,7 +78,9 @@ const Header = (props) => {
         </div>
       </Grid>
       <Grid item>
-        <Link component={RouterLink} to='/main/profile' >
+        <Link
+          component={RouterLink}
+          to='/main/profile' >
         <IconButton
         aria-label='Show more'
         aria-haspopup='true'
