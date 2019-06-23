@@ -24,17 +24,17 @@ const playlist = [
 ];
 
 const style = {
-    maxWidth: '100%',
+    maxWidth: '90%',
     position: "fixed",
     bottom: '0',
-    width: "100%",
-    height: "175px"
+    height: "175px",
+    width : '90%'
 };
 
 export default function MusicPlayerContainer() {
     return (<>
         <div>
-            <MusicPlayer style={style} autoplay={true} playlist={playlist}/>
+            <MusicPlayer style={style} playlist={playlist}/>
         </div>
     </>)
 }
