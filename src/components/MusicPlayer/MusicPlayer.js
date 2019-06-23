@@ -5,7 +5,7 @@ import './musicPlayer.css';
 
 const playlist = [
     {
-        url: images.music.url,
+        url: 'http://localhost:3001/music/63f49327b755045c801c851d03a9cd941559913232030.mp3',
         cover: '',
         title: 'Choose element',
         artist: [
@@ -14,7 +14,7 @@ const playlist = [
         ]
     },
     {
-        url: images.music.url,
+        url: 'http://localhost:3001/music/63f49327b755045c801c851d03a9cd941559913232031.mp3',
         cover: '',
         title: 'Bedtime Stories',
         artist: [

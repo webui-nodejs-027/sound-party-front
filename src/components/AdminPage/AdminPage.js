@@ -28,7 +28,6 @@ const addresses = {
 
 const useStyles = makeStyles(() => ({
   box: {
-    height: '100vh',
     backgroundColor: '#cce6ff',
     padding: '20px'
   },
