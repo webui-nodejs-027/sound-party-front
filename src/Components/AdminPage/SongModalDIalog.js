@@ -46,7 +46,7 @@ const SongModalDialog = (props) => {
         <ListItem>
           {/*{errorMessage}*/}
         </ListItem>
-        <ListItem button >
+        <ListItem button button onClick={() => props.setOpen(false)}>
           <ListItemAvatar>
             <Avatar>
               <AddIcon/>
