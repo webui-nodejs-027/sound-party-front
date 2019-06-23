@@ -10,7 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {InputLabel, Select} from '@material-ui/core';
 import DropSelect from './AsyncSelect'
 import { makeStyles } from '@material-ui/core/styles';
-import {withStyles} from "@material-ui/core/styles/index";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -33,7 +32,7 @@ function AlertDialog(props) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{props.message}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">Please, fill ALL of the fields</DialogTitle>
                 <DialogActions>
                     <Button onClick={props.onClick} color="primary" autoFocus>
                         Ok
@@ -65,95 +64,76 @@ function DateAndTimePickers(props) {
     );
 }
 
-const customSelStyles = theme => ({
-    custSel: {
-        border: '1px solid',
-        borderColor: 'rgb(204, 204, 204)',
-        borderRadius: '4px',
-        minHeight: '38px',
-    }
-});
-
-class CustomSel extends React.Component {
+class CustomSelect extends React.Component {
 
     render() {
-        const {classes} = this.props;
         return (<Fragment>
-                <div                     className={classes.custSel}
+                <InputLabel htmlFor={this.props.type}>{this.props.type}</InputLabel>
+                <Select
+                    value={this.props.value}
+                    inputProps={
+                        {name: this.props.type}
+                    }
+                    onChange={this.props.handleChange}
                 >
-                    {/*<InputLabel htmlFor={this.props.type}>{this.props.name}</InputLabel>*/}
-                    <Select
-
-                        classes={classes}
-                        value={this.props.value}
-                        inputProps={
-                            {name: this.props.type,
-                                id: this.props.type}
-                        }
-                        onChange={this.props.handleChange}
-                        fullWidth
-                    >
-                        <MenuItem value={null}>
-                            <em>None</em>
-                        </MenuItem>
-                        {
-                            this.props.array.map(elem => {
-                                return <MenuItem
-                                    value={elem}
-                                    key={elem.id}
-                                >
-                                    {elem.name}
-                                </MenuItem>
-                            })
-                        }
-                    </Select>
-                </div>
+                    <MenuItem value={null}>
+                        <em>None</em>
+                    </MenuItem>
+                    {
+                        this.props.array.map(elem => {
+                            return <MenuItem
+                                value={elem}
+                                key={elem.id}
+                            >
+                                {elem.name}
+                            </MenuItem>
+                        })
+                    }
+                </Select>
             </Fragment>
         )
     }
 }
-
-const CustomSelect = withStyles(customSelStyles)(CustomSel);
 
 export default class FormDialog extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             open: false,
-            title: '',
+            title: props.meeting ? props.meeting.meeting : '',
             address: '',
-            genre: null,
-            // status: null,
-            author: null,
-            city: null,
+            genre: '',
+            status: '',
+            author: '',
+            city: '',
+            id: props.meeting ? props.meeting.id : '',
             date: new Date().toISOString().slice(0, -8),
             showCreateError: false,
-            showSuccesPopup: false,
+            meeting: props.meeting ? props.meeting : 'lala',
         };
 
         this.getUserId = this.getUserId.bind(this);
         this.handleClickOpen = this.handleClickOpen.bind(this);
-        this.handleClose = this.handleClose.bind(this);
+        // this.handleClose = this.handleClose.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleAddressChange = this.handleAddressChange.bind(this);
         this.handleGenreChange = this.handleGenreChange.bind(this);
-        // this.handleStatusChange = this.handleStatusChange.bind(this);
+        this.handleStatusChange = this.handleStatusChange.bind(this);
         this.handleAuthorChange = this.handleAuthorChange.bind(this);
         this.handleCityChange = this.handleCityChange.bind(this);
-        this.handleCreation = this.handleCreation.bind(this);
+        this.handleUpdateClick = this.handleUpdateClick.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
-        this.handleReset = this.handleReset.bind(this);
+        // this.handleReset = this.handleReset.bind(this);
         this.handleCreateErrorClose = this.handleCreateErrorClose.bind(this);
         this.handleCreateErrorClick = this.handleCreateErrorClick.bind(this);
-        this.handleCloseSuccessPopup = this.handleCloseSuccessPopup.bind(this);
     }
 
-    handleCloseSuccessPopup() {
-        this.setState({
-            showSuccesPopup: false,
-        });
-        this.props.handleClose();
-        this.handleReset();
+    componentDidUpdate() {
+        console.log('update');
+    }
+
+    componentDidMount() {
+        console.log('mount');
     }
 
     handleCreateErrorClick(e) {
@@ -176,18 +156,6 @@ export default class FormDialog extends React.Component {
         return JSON.parse(atob(payload)).id;
     };
 
-    handleReset(e) {
-        this.setState({
-            title: '',
-            address: '',
-            genre: null,
-            status: null,
-            author: null,
-            city: null,
-            date: new Date().toISOString().slice(0, -8)
-        })
-    }
-
     handleDateChange(e) {
         if( e.target.value ){
             const stringEnding = ':00.000Z';
@@ -198,42 +166,36 @@ export default class FormDialog extends React.Component {
         }
     }
 
-    handleCreation() {
-try {
-    const data = JSON.stringify({
-        name: this.state.title,
-        dateTime: this.state.date,
-        cityId: this.state.city.id,
-        address: this.state.address,
-        genreId: this.state.genre.id,
-        creatorId: this.getUserId() // переделать из юзера!!!
-    });
+    handleUpdateClick() {
+        try {
+            const data = JSON.stringify({
+                name: this.state.title,
+                dateTime: this.state.date,
+                cityId: this.state.city.id,
+                address: this.state.address,
+                statusId: this.state.status.id,
+                genreId: this.state.genre.id,
+                // creatorId: this.getUserId()
+            });
 
-    fetch('http://localhost:3001/api/meetings', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: data
-    })
-        .then(res =>{
-            if(res.status === 201) {
+            fetch(`http://localhost:3001/api/meetings/${this.state.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: data
+            })
+                .then(res => res.json())
+                .then(res => {
+                })
+        }
+        catch(e){
+            if(e.message === 'Cannot read property \'id\' of null')//возможна и другая ошибка
                 this.setState({
-                    showSuccesPopup: true,
-                });
-            }
-            return res.json()
-        } )
-        .then(res => {
-            console.log(res);
-        })
-} catch(e){
-     if(e.message === 'Cannot read property \'id\' of null')
-     this.setState({
-         showCreateError: true
-     })
+                    showCreateError: true
+                })
 
-}
+        }
     }
 
     handleCityChange(option) {
@@ -248,15 +210,15 @@ try {
         })
     }
 
-    // handleStatusChange(e) {
-    //     this.setState({
-    //         status: e.target.value
-    //     })
-    // }
-
-    handleGenreChange(e) {
+    handleStatusChange(option) {
         this.setState({
-            genre: e.target.value
+            status: option
+        })
+    }
+
+    handleGenreChange(option) {
+        this.setState({
+            genre: option
         })
     }
 
@@ -268,7 +230,7 @@ try {
 
     handleTitleChange(e) {
         this.setState({
-           title: e.target.value
+            title: e.target.value
         });
     }
 
@@ -278,19 +240,23 @@ try {
         })
     }
 
-    handleClose() {
-        this.setState({
-            open: false
-        })
-    }
+    // handleClose() {
+    //     this.setState({
+    //         open: false
+    //     })
+    // }
     render(){
+        console.log('state meeting from popup', this.state.meeting);
+        const meeting = this.props.meeting;
+        console.log(' meeting from popup', meeting);
+
         return (
-            <Fragment>
+            <div>
                 {/*<Button variant="outlined" color="primary" onClick={this.handleClickOpen}>*/}
-                    {/*Create meeting*/}
+                    {/*Update meeting*/}
                 {/*</Button>*/}
-                <Dialog open={this.props.open} onClose={this.props.handleClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Create Meeting</DialogTitle>
+                <Dialog open={this.props.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">Update Meeting</DialogTitle>
                     <DialogContent>
                         Please, fill all of the fields below
                         <DialogContentText>
@@ -302,62 +268,66 @@ try {
                             label="Title"
                             type="text"
                             fullWidth
+                            defaultValue={meeting.meeting}
                             value = {this.state.title}
                             onChange={this.handleTitleChange}
                         />
                         <TextField
-
                             margin="dense"
                             id="address"
                             label="Address"
                             type="text"
                             fullWidth
-                            value = {this.state.address}
+                            defaultValue = {meeting.address}
+                            value={this.state.address}
                             onChange={this.handleAddressChange}
                         />
-                        <CustomSelect
-                            placeholder='Genre'
-                            style={{
-                                width: '100%'
-                            }}
+                        <DropSelect
+                            // defaultInputValue
                             value={this.state.genre}
-                            type='genre'
-                            array={this.props.genres}
+                            placeholder='Genre'
+                            type='genres'
                             handleChange={this.handleGenreChange}
                         />
-                        {/*<CustomSelect*/}
-                            {/*value={this.state.status}*/}
-                            {/*type='status'*/}
-                            {/*array={this.props.statuses}*/}
-                            {/*handleChange={this.handleStatusChange}*/}
-                        {/*/>*/}
                         <DropSelect
-                            defaultValue={{value: 'lflf', label: 'AAAAa'}}
+                            defaultInputValue='papapa'
+
+                            value={this.state.status}
+                            inputValue='kakaka'
+                            placeholder='Status'
+                            type='statuses'
+                            handleChange={this.handleStatusChange}
+                        />
+                        <DropSelect
+                            defaultValue={meeting.author ? meeting.author.name : ''}
                             value={this.state.author}
                             placeholder='Author'
                             type='authors'
                             handleChange={this.handleAuthorChange}
                         />
                         <DropSelect
+                            // defaultValue={meeting.city.name}
                             value={this.state.city}
                             placeholder='City'
                             type='cities'
                             handleChange={this.handleCityChange}
                         />
                         <DateAndTimePickers
-                            date={this.state.date}
-                        onChange={this.handleDateChange}
+                             date={meeting.date}
+                            onChange={this.handleDateChange}
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleReset} color="primary">
+                        <Button onClick={this.handleReset}
+                                color="primary"
+                        >
                             Reset
                         </Button>
                         <Button onClick={this.props.handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.handleCreation} color="primary">
-                            Create
+                        <Button onClick={this.handleUpdateClick} color="primary">
+                            Update
                         </Button>
                     </DialogActions>
                 </Dialog>
@@ -366,17 +336,9 @@ try {
                     onClose={this.handleCreateErrorClose}
                     onClick={this.handleCreateErrorClick}
                     open={this.state.showCreateError}
-                    message={'Please, fill ALL of the fields'}
                 />
 
-                <AlertDialog
-                    onClose={this.handleCloseSuccessPopup}
-                    onClick={this.handleCloseSuccessPopup}
-                    open={this.state.showSuccesPopup}
-                    message={`meeting '${this.state.title}' was created`}
-                />
-
-            </Fragment>
+            </div>
         );
     }
 

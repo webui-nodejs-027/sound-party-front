@@ -25,6 +25,8 @@ export default class DropSelect extends Component {
     render() {
         return (
             <AsyncSelect
+                defaultInputValue={this.props.defaultInputValue ? this.props.defaultInputValue : ''}
+                // defaultValue={{value: 23, label: 'papaad'}}
                 isClearable={true}
                 placeholder={this.props.placeholder}
                 value={this.props.value}

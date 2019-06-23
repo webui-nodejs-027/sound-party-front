@@ -9,11 +9,15 @@ import {
 import EnhancedTable from './MeetingTable1'
 import SearchIcon from '@material-ui/icons/Search';
 import DropSelect from './AsyncSelect';
-//import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import PopupCreateMeeting from './popupCreateMeeting'
 import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import Checkbox from '@material-ui/core/Checkbox';
+import PopupInfo from './PopupInfo';
+import PopupJoin from './PopupJoin';
+import PopupUpdateMeeting from './PopupUpdateMeeting';
+
 
 const customSelStyles = theme => ({
     custSel: {
@@ -36,9 +40,10 @@ const searchMStyles = theme => ({
 
 const GreenCheckbox = withStyles({
     root: {
-        color: green[400],
+        // paddingLeft: '40px',
+        color: '#3f51b5',
         '&$checked': {
-            color: green[600],
+            color: '#3f51b5',
         },
     },
     checked: {},
@@ -106,7 +111,14 @@ class SearchM extends React.Component {
                 order: 'ASC'
             },
             showOnlyOwnMeetings: false,
-            showOnlyCreatedMeetings: false
+            showOnlyCreatedMeetings: false,
+            showInfo: false,
+            currentMeeting: null,
+            showJoinPopup: false,
+            joinUnsubscribeToggle: null,
+            showUpdatePopup: false,
+            carMeet: null,
+            showCreatePopup: false,
         };
 
         this.getUserId = this.getUserId.bind(this);
@@ -119,10 +131,84 @@ class SearchM extends React.Component {
         this.handleChangePage = this.handleChangePage.bind(this);
         this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
         this.handleChangeSort = this.handleChangeSort.bind(this);
-        this.handleJoinMeeting = this.handleJoinMeeting.bind(this);
+        this.handleClickInfo = this.handleClickInfo.bind(this);
         this.handleCreateClick = this.handleCreateClick.bind(this);
         this.handleChangeShowOnlyOwn = this.handleChangeShowOnlyOwn.bind(this);
         this.handleChangeShowOnlyCreated = this.handleChangeShowOnlyCreated.bind(this);
+        this.handleCloseInfo = this.handleCloseInfo.bind(this);
+        this.handleClickJoin = this.handleClickJoin.bind(this);
+        this.handleClickCloseJoin = this.handleClickCloseJoin.bind(this);
+        this.handleClickUnsubscribe = this.handleClickUnsubscribe.bind(this);
+        this.handleClickUpdate = this.handleClickUpdate.bind(this);
+        this.handleCloseUpdatePopup = this.handleCloseUpdatePopup.bind(this);
+        this.handleClickCreateMeeting = this.handleClickCreateMeeting.bind(this);
+        this.handleCloseCreateMeeting = this.handleCloseCreateMeeting.bind(this);
+    }
+
+    handleClickCreateMeeting() {
+        this.setState({
+            showCreatePopup: true,
+        });
+    }
+
+    handleCloseCreateMeeting() {
+        this.setState({
+           showCreatePopup: false,
+        });
+    }
+
+    handleCloseUpdatePopup() {
+        this.setState({
+            showUpdatePopup: false,
+        })
+    }
+
+    handleClickUpdate(e) {
+        this.setState({
+            showUpdatePopup: true,
+        })
+    }
+
+    handleClickUnsubscribe(meetingId, e) {
+        this.setState({
+            showInfo: false,
+            joinUnsubscribeToggle: 'unsubscribe'
+        });
+        const userId = this.getUserId();
+        console.log(meetingId);
+        const data = JSON.stringify({
+            meetingId: meetingId
+        });
+        fetch( `http://localhost:3001/api/users/${userId}/unsubscribeFromMeeting`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: data
+            })
+            .then(res => {
+                console.log(res.status);
+                return res.json()})
+            .then(res => {
+            this.setState({
+                showJoinPopup: true,
+            })
+            })
+    }
+
+    handleClickCloseJoin(){
+        this.setState({
+            showJoinPopup: false,
+            showInfo: false,
+        })
+    }
+
+    handleCloseInfo() {
+        this.setState({
+            showInfo: false,
+            //очистить все данные
+        })
     }
 
     getUserId = () => {
@@ -133,7 +219,7 @@ class SearchM extends React.Component {
     };
 
     handleChangeShowOnlyCreated(e){
-        let query = `http://localhost:3001/api/meetings?page=1&limit=${this.state.rowsPerPage}&sortBy=${this.state.sortBy.param}&order=${this.state.sortBy.order}&userId=1`;
+        let query = `http://localhost:3001/api/meetings?page=1&limit=${this.state.rowsPerPage}&sortBy=${this.state.sortBy.param}&order=${this.state.sortBy.order}&userId=${this.getUserId()}`;
         let data = Object.entries(this.state.currentData);
         data.forEach((item)=> {
             if(item[1] !== null) {
@@ -171,7 +257,7 @@ class SearchM extends React.Component {
             }
         });
         if(!this.state.showOnlyOwnMeetings) {
-           query = `${query}&userId=1`
+            query = `${query}&userId=${this.getUserId()}`
         }
         fetch(query)
             .then(res => res.json())
@@ -180,6 +266,7 @@ class SearchM extends React.Component {
                     console.log('res from getOwn:',res);
                     return {
                         showOnlyOwnMeetings: !state.showOnlyOwnMeetings,
+                        showOnlyCreatedMeetings: false,
                         meetingsData: res,
                         page: 1
                     }
@@ -190,8 +277,32 @@ class SearchM extends React.Component {
     handleCreateClick(e) {
     }
 
-    handleJoinMeeting( meetingId, index, e){
+    handleClickInfo(id, row, e){
+        console.log('row',row);
+        fetch(`http://localhost:3001/api/meetings/${id}?userId=${this.getUserId()}`)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({
+                    curMeet: row,
+                    currentMeeting: res,
+                })
+            })
+            .then(a => {
+                this.setState({
+                    showInfo: true,
+                })
+            })
+        ;
+    }
+
+    handleClickJoin( meetingId, index, e){
+        this.setState({
+            showInfo: false,
+            joinUnsubscribeToggle: 'join',
+        });
         const userId = this.getUserId();
+        console.log(meetingId);
         //const userId = 2;
         const data = JSON.stringify({
            meetingId: meetingId
@@ -203,15 +314,16 @@ class SearchM extends React.Component {
                     'Content-Type': 'application/json'
                 },
                 body: data
-        }).then(res =>{
-            if(res.status === 500) {
-                alert('You have already joined this meeting')
-            } else {
-                alert('Thanks for joining!');
-                return res.json();}
-        }
-            )
+        })
             .then(res => {
+                if(res.status !== 200 ) {
+                    console.log('Ошибка подписки')
+                }
+                return res.json()} )
+            .then(res => {
+                this.setState({
+                    showJoinPopup: true,
+                })
             })
     }
 
@@ -227,7 +339,6 @@ class SearchM extends React.Component {
                 newParam = 'dateTime';
             }
             const newOrder = this.state.sortBy.order === 'ASC' ? 'DESC' : 'ASC';
-
             let query = `page=1&limit=${this.state.rowsPerPage}&sortBy=${newParam}&order=${newOrder}`;
             const data = Object.entries(this.state.currentData);
             data.forEach((item) => {
@@ -235,6 +346,13 @@ class SearchM extends React.Component {
                     query = `${query}&${item[0]}=${item[1].name}`;
                 }
             });
+            if(this.state.showOnlyOwnMeetings){
+                query = `${query}&userId=${this.getUserId()}`
+            }
+            if(this.state.showOnlyCreatedMeetings){
+                query = `${query}&isCreator=true`
+            }
+
             fetch(
                 `http://localhost:3001/api/meetings?${query}`
             )
@@ -263,6 +381,14 @@ class SearchM extends React.Component {
             }
         });
 
+        if(this.state.showOnlyOwnMeetings){
+            query =`${query}&userId=${this.getUserId()}`
+        }
+
+        if(this.state.showOnlyCreatedMeetings){
+            query = `${query}&isCreator=true`
+        }
+
         fetch(
             `http://localhost:3001/api/meetings?${query}`
         )
@@ -287,6 +413,14 @@ class SearchM extends React.Component {
             }
         });
 
+        if(this.state.showOnlyOwnMeetings){
+            query =`${query}&userId=${this.getUserId()}`
+        }
+
+        if(this.state.showOnlyCreatedMeetings){
+            query = `${query}&isCreator=true`
+        }
+
         fetch(
             `http://localhost:3001/api/meetings?${query}`
         )
@@ -304,16 +438,28 @@ class SearchM extends React.Component {
 
             let query = `page=${this.state.page}&limit=${this.state.rowsPerPage}&sortBy=${this.state.sortBy.param}&order=${this.state.sortBy.order}`;
             const data = Object.entries(this.state.currentData);
+            console.log('1data from find', data);
             data.forEach((item)=> {
                 if(item[1] !== null) {
                     query = `${query}&${item[0]}=${item[1].name}`;
                 }
             });
+        console.log('2data from find', data);
+
+        if(this.state.showOnlyOwnMeetings){
+            query =`${query}&userId=${this.getUserId()}`
+        }
+
+        if(this.state.showOnlyCreatedMeetings){
+            query = `${query}&isCreator=true`
+        }
+        console.log('query', query);
         fetch(
             `http://localhost:3001/api/meetings?${query}`
         )
             .then(res=>res.json())
             .then(result => {
+                console.log(result);
                 this.setState({
                     meetingsData: result
                 });
@@ -399,12 +545,19 @@ class SearchM extends React.Component {
         const {classes} = this.props;
         return (
             <Fragment>
+                <div style={{
+                    marginTop: '30px',
+                    marginBottom: '10px',
+                }}>
                 <Grid
                     container
                     spacing={1}
                     direction="row"
                     justify="flex-end"
                     alignItems="center"
+                    style={{
+                        // paddingLeft: '20px',
+                    }}
                 >
                     <Grid
                         item
@@ -445,11 +598,90 @@ class SearchM extends React.Component {
                 />
                     </Grid>
                 <Grid item xs={2}>
-                <Fab onClick={this.handleClick}>
-                    <SearchIcon color='primary'/>
+                <Fab
+                    style={{
+                        width: '38px',
+                        height: '38px',
+                    }}
+                    onClick={this.handleClick}>
+                    <SearchIcon
+                        color='primary'/>
                 </Fab>
                 </Grid>
+                    {/*<Grid item xs={2}>*/}
+                        {/*<Button variant="contained" color="secondary" onClick={this.handleClickCreateMeeting}>*/}
+                            {/*Create meeting*/}
+                        {/*</Button>*/}
+
+                    {/*</Grid>*/}
                 </Grid>
+
+
+
+                <Grid
+                    container
+                    spacing={1}
+                    direction="row"
+                    justify="flex-end"
+                    alignItems="center"
+                    style={{
+                        paddingTop: '20px',
+                        paddingLeft: '20px'
+
+                    }}
+                >
+                    <Grid item xs={10}>
+                        <Grid
+                            container
+                            spacing={1}
+                            direction="row"
+                            justify="flex-start"
+                            alignItems="center"
+                            style={{
+                                paddingLeft: '20px'
+
+                            }}
+                        >
+                            <Grid item xs={3}>
+
+                            <FormControlLabel
+                        control={
+                            <GreenCheckbox
+                                checked={this.state.showOnlyOwnMeetings}
+                                onChange={this.handleChangeShowOnlyOwn}
+                                value="checkedG"
+                            />
+                        }
+                        label="Show only mine"
+                    />
+                            </Grid>
+                            <Grid item xs={4}>
+                            {this.state.showOnlyOwnMeetings && <FormControlLabel
+                            control={
+                                <GreenCheckbox
+                                    checked={this.state.showOnlyCreatedMeetings}
+                                    onChange={this.handleChangeShowOnlyCreated}
+                                    value="checkedG"
+                                />
+                            }
+                            label="Show only created by me"
+                        />
+                        }
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid item xs={2}>
+                    <Button variant="contained" color="secondary" onClick={this.handleClickCreateMeeting}>
+                        Create meeting
+                    </Button>
+                    </Grid>
+
+                </Grid>
+                </div>
+
+
+
 
                 {/*<Button*/}
                     {/*onClick={this.handleCreateClick}*/}
@@ -459,29 +691,12 @@ class SearchM extends React.Component {
                     {/*Create*/}
                 {/*</Button>*/}
                 <PopupCreateMeeting
+                    open={this.state.showCreatePopup}
+                    handleClose={this.handleCloseCreateMeeting}
                     genres={this.state.genres}
                     statuses={this.state.statuses}
                 />
-                <FormControlLabel
-                    control={
-                        <GreenCheckbox
-                            checked={this.state.showOnlyOwnMeetings}
-                            onChange={this.handleChangeShowOnlyOwn}
-                            value="checkedG"
-                        />
-                    }
-                    label="Show only mine"
-                />
-                <FormControlLabel
-                    control={
-                        <GreenCheckbox
-                            checked={this.state.showOnlyCreatedMeetings}
-                            onChange={this.handleChangeShowOnlyCreated}
-                            value="checkedG"
-                        />
-                    }
-                    label="Show only created by me"
-                />
+
             <EnhancedTable
                 rows={this.state.meetingsData ? this.state.meetingsData.data : []}
                 handleChangePage={this.handleChangePage}
@@ -492,7 +707,7 @@ class SearchM extends React.Component {
                 handleChangeRowsPerPage={this.handleChangeRowsPerPage}
                 handleChangeSort = {this.handleChangeSort}
                 direction = {this.state.sortBy.order}
-                handleJoinMeeting = {this.handleJoinMeeting}
+                handleClickInfo = {this.handleClickInfo}
                 // rowsCount={
                 //     this.state.meetingsData
                 //         ?
@@ -501,6 +716,28 @@ class SearchM extends React.Component {
                 //         10
                 // }
             />
+            <PopupInfo
+                userId = {this.getUserId()}
+                meeting = {this.state.currentMeeting}
+            open={this.state.showInfo}
+            onClickClose={this.handleCloseInfo}
+                onClickJoin={this.handleClickJoin}
+                onClickUnsubscribe={this.handleClickUnsubscribe}
+                onClickUpdate={this.handleClickUpdate}
+            />
+
+                <PopupJoin
+                onClickClose={this.handleClickCloseJoin}
+                open={this.state.showJoinPopup}
+                joinUnsubcribe={this.state.joinUnsubscribeToggle}
+                />
+
+                <PopupUpdateMeeting
+                    open = {this.state.showUpdatePopup}
+                    handleClose = {this.handleCloseUpdatePopup}
+                    meeting={this.state.curMeet ? this.state.curMeet : 'papa'}
+                />
+
             </Fragment>
     )
     }
