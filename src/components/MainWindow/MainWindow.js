@@ -132,6 +132,12 @@ const MainWindow = (props) => {
             case 'MainPage':
                 parentData = {...parentData, handleElectItemSetter}
                 break;
+            case 'Genre':
+                parentData = {...parentData, handleElectItemSetter}
+                break;
+            case 'Author':
+                parentData = {...parentData, handleElectItemSetter}
+                break;
             case 'Explore':
                 parentData = {...parentData, electItem: electItem}
                 break;

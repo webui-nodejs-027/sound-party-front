@@ -2,7 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
-import {images} from '../../constant'
+import {images} from '../../constant';
+import './PrimaryCard.css'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,6 +17,8 @@ const useStyles = makeStyles(theme => ({
   image: {
     position: 'relative',
     height: 300,
+    boxShadow: '0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.35)',
+    transition: 'all 0.3s cubic-bezier(.25,.8,.25,1)',
     [theme.breakpoints.down('xs')]: {
       width: '100% !important', // Overrides inline-style
       height: 200,
@@ -31,6 +34,7 @@ const useStyles = makeStyles(theme => ({
       '& $imageTitle': {
         border: '4px solid currentColor',
       },
+      boxShadow: '0 14px 22px rgba(0,0,0,0.35), 0 10px 10px rgba(0,0,0,0.35)'
     },
   },
   focusVisible: {},
@@ -82,6 +86,7 @@ const useStyles = makeStyles(theme => ({
 export default function MainCard(props) {
   const classes = useStyles();
   const cardType = props.cardType;
+  console.log(classes.image)
 
   return (
     <div className={classes.root}>
@@ -94,7 +99,7 @@ export default function MainCard(props) {
             width: images[cardType].width,
           }}
         >
-          <span
+          <spanx  
             className={classes.imageSrc}
             style={{
               backgroundImage: `url(${images[cardType].url})`,

@@ -2,7 +2,6 @@ import React from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { getRandomGradient } from '../../constant';
-import { Link } from 'react-router-dom'
 
 const ColorButton = withStyles(theme => ({
   root: {
@@ -24,12 +23,10 @@ export default function SecondaryCard(props) {
   const height = props.height || 75;
   const width = props.width || 'auto'
   const itemData = {
-    typeName: props.typeName,
+    searchBy: props.searchBy,
     itemId: props.itemId,
     itemName: props.itemName,
   }
-  console.log('this props');
-  console.log(typeof props.handleElectItemSetter);
 
   return (
     <div>

@@ -1,39 +1,53 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
+import './Explore.css';
 
 class Explore extends React.Component {
   state = {
-    electedItem : null,
-    elementsForTable: null
+    electedItem: null,
+    elementsForTable: 0
   };
 
   async componentDidMount() {
-    let data = await this.getDataByItem(this.props.typeName, this.props.itemId);
-    this.setState({elementsForTable: data});
+    let data = await this.getDataByItem(this.props.electItem.searchBy, this.props.electItem.itemName);
+    this.setState({ elementsForTable: data });
   }
 
   async componentWillMount() {
-    this.setState({electedItem: this.props.electItem});
+    this.setState({ electedItem: this.props.electItem });
   }
 
   render() {
-    console.log(this.state);
-    console.log(this.props);
-    //const { elementsForView } = this.state;
     return (
       <div className="ExploreBlock">
-        <Grid justify="center" container spacing={1}>
-          <Grid item xs={12} sm={6}>
-            <h1>{this.state.electedItem.itemName}</h1>
+        <div className="ExploreHeader" style={{ width: '100' }}>
+          <Grid justify="flex-start" container spacing={1}>
+            <Grid item xs={12} sm={6}>
+              <h1 className="specialH1">{this.props.electItem.itemName}</h1>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <h1 className="specialH1">{this.state.elementsForTable.total}</h1>
+            </Grid>
           </Grid>
+        </div>
 
-        </Grid>
+        <div className="ExploreTable" style={{ height: 400 , width: '100%', border: '1px solid black'}}>
+          <Grid container justify="center" spacing={0}>
+            there is table
+          </Grid>
+        </div>
+
       </div>
     );
   }
 
-  getDataByItem = async (typeName, itemId) => {
-    let url = `http://localhost:3001/api/songs/?page=1&limit=10&typeName=${typeName}&itemId=${itemId}`;
+  getDataByItem = async (typeName, itemName) => {
+    let url;
+    if (typeName === 'genre') {
+      url = `http://localhost:3001/api/songs/?page=1&limit=10`;
+    } else if (typeName === 'author') {
+      url = `http://localhost:3001/api/songs/?page=1&limit=10`;
+    }
     const response = await fetch(url);
     const res = await response.json();
     console.log('this is res');

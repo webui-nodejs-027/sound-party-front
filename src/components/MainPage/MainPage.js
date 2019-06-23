@@ -9,8 +9,8 @@ class MainPage extends React.Component {
     return (
       <div className="MainBlock" >
         <MainCardApp/>
-        <GenreApp handleElectItemSetter={this.props.handleElectItemSetter}/>
-        <AuthorApp handleElectItemSetter={this.props.handleElectItemSetter}/>
+        <GenreApp handleElectItemSetter={this.props.handleElectItemSetter} viewAllBtn={true} limit={6}/>
+        <AuthorApp handleElectItemSetter={this.props.handleElectItemSetter} viewAllBtn={true} limit={6}/>
       </div>
     );
   }

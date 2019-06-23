@@ -30,7 +30,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function TabsApp(props) {
   // const tab = props.tab || 0;
-  console.log(props);
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(1);
