@@ -11,6 +11,7 @@ class AllPLaylistsGrid extends Component {
       onCreate,
       onUpdateNamePlaylist,
       onDeletePlaylist,
+      onGetSongs
      } = this.props;
 
     return (
@@ -22,10 +23,11 @@ class AllPLaylistsGrid extends Component {
           {items.map((playlist) => (
             <Grid item key={playlist.id}>
               <PlaylistButton 
-              name={playlist.name}
+               name={playlist.name}
                id={playlist.id} 
                onUpdateNamePlaylist={onUpdateNamePlaylist}
-               onDeletePlaylist={onDeletePlaylist}/>
+               onDeletePlaylist={onDeletePlaylist}
+               onGetSongs={onGetSongs} />
             </Grid>
           ))}
         </Grid>

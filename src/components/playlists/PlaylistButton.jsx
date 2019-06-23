@@ -10,6 +10,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Table from "./Table";
 
 
 const styles = theme => ({
@@ -39,7 +40,8 @@ class PlaylistButton extends Component {
           open: false,
           openDelete: false,
           name: "",
-          isFavourite : false
+          isFavourite : false,
+          openSongs: false
         };
       }
     
@@ -55,6 +57,11 @@ class PlaylistButton extends Component {
          });
       };
     
+      handleClickOpenSongs=() => {
+        this.setState({ 
+          openSongs: true,
+         });
+      }
       handleClose = () => {
         this.setState({ open: false });
       };
@@ -85,6 +92,12 @@ class PlaylistButton extends Component {
         this.handleClose();
       };
 
+      onGetSongs = () => {
+        this.props.onGetSongs({
+          id: this.props.id
+        });
+        this.handleClickOpenSongs();
+      }
   render () {
     const { classes } = this.props;
       return (
@@ -93,6 +106,7 @@ class PlaylistButton extends Component {
             variant="contained"
             color="default"
             className={classes.button}
+            onclick = {this.onGetSongs}
           >
             {this.props.name}
             <div className={classes.iconContainer}>
@@ -162,6 +176,8 @@ class PlaylistButton extends Component {
           </Button>
         </DialogActions>
       </Dialog>
+      <Table 
+      open={this.state.openSongs}/>
       </div>
       );
   }
