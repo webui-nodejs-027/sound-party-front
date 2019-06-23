@@ -18,6 +18,7 @@ import {
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import RouteWithSubRoutes from './RouteWithSubRoutes';
 import Header from './Header';
+import MusicPlayerContainer from "./MusicPlayer/MusicPlayer";
 const drawerWidth = 200;
 
 const useStyles = makeStyles(theme => ({
@@ -56,10 +57,11 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  content: {
-    flexGrow: 1,
-    paddingTop: theme.spacing(8),
-  },
+    content: {
+        flexGrow: 1,
+        paddingTop: theme.spacing(8),
+        marginBottom: "200px",
+    },
   link: {
     textDecoration: 'none'
   }
@@ -196,6 +198,7 @@ const MainWindow = (props) => {
           <Switch>
             { routes }
           </Switch>
+          <MusicPlayerContainer/>
       </main>
     </div>
   );

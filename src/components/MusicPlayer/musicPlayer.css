@@ -1,0 +1,7 @@
+.player-cover {
+    display: none;
+}
+
+.player .player-control .controls {
+    display: block;
+}

@@ -36,7 +36,7 @@ const config = [
             },
             {
                 name: 'Songs',
-                path: '/main/songs',
+                path: '/main/Songs',
                 component: Songs
             },
             {
