@@ -27,13 +27,16 @@ export default function SecondaryCard(props) {
     itemId: props.itemId,
     itemName: props.itemName,
   }
+  
+  const action = props.action;
 
   return (
     <div>
         <ColorButton variant="contained" color="primary"
           className={classes.margin}
           style={{ 'height': height, 'width': width }}
-          onClick={() => { props.handleElectItemSetter(itemData) }}
+          // onClick={() => { props.handleElectItemSetter(itemData) }}
+          onClick={() => {action(itemData)}}
         >
           {props.itemName}
         </ColorButton>

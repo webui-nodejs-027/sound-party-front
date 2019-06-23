@@ -18,7 +18,6 @@ import {
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import RouteWithSubRoutes from '../RouteWithSubRoutes';
 import Header from '../Header';
-import './main-window.css';
 
 const drawerWidth = 200;
 
@@ -101,7 +100,7 @@ const MainWindow = (props) => {
         <div>
             <div className={classes.toolbar}>
                 <h1 style={{margin: 0}}>
-                    <Link className='mainPageh1' to='/main'>
+                    <Link className='mainPageh1' to='/main' style={{textDecoration:'none', color:'White'}}>
                         Sound party
                     </Link>
                 </h1>
@@ -133,10 +132,10 @@ const MainWindow = (props) => {
                 parentData = {...parentData, handleElectItemSetter}
                 break;
             case 'Genre':
-                parentData = {...parentData, handleElectItemSetter}
+                parentData = {...parentData, handleElectItemSetter, showMoreBtn: true}
                 break;
             case 'Author':
-                parentData = {...parentData, handleElectItemSetter}
+                parentData = {...parentData, handleElectItemSetter, showMoreBtn: true}
                 break;
             case 'Explore':
                 parentData = {...parentData, electItem: electItem}

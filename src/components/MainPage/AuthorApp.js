@@ -7,15 +7,25 @@ class AuthorApp extends React.Component {
   searchBy = 'authorName';
   state = {
     elementsForView: null,
-    viewAllDisplay: 'block'
+    viewAllDisplay: 'block',
+    showMoreDisplay: 'block',
+    limit: null
   };
 
   async componentDidMount() {
     if (!this.props.viewAllBtn) {
       this.setState({ viewAllDisplay: 'none' });
     }
-    const authors = await this.getAuthors();
+    if (!this.props.showMoreBtn) {
+      this.setState({ showMoreDisplay: 'none' })
+    }
+    if (this.props.limit) { 
+      await this.setState({limit: this.props.limit})
+    } 
+
+    const authors = await this.getAuthors(this.state.limit);
     this.setElementsForView(authors);
+    console.log(this.state);  
   }
 
   setElementsForView = async (authors) => {
@@ -41,6 +51,7 @@ class AuthorApp extends React.Component {
 
   render() {
     const { elementsForView } = this.state;
+    console.log(this.state.showMoreDisplay)
     return (
       <div className="AuthorBlock" style={{ marginTop: '25px', height: 'auto'}}>
         <Grid container justify="flex-start" spacing={3}>
@@ -50,25 +61,52 @@ class AuthorApp extends React.Component {
           <Grid item xs={6}>
             <div className="viewAllLink" style={{ display: this.state.viewAllDisplay }}>
               <Link style={{ textDecoration: 'none' }} to="/main/genres">
-                <h2 style={{ textAlign: 'end', fontSize: '26px', marginRight: '50px', width: 'auto' }}> View all</h2>
+                <h2 style={{ textAlign: 'end', fontSize: '26px', marginRight: '50px', width: 'auto', color: 'rgba(0, 0, 0, 0.87)' }}> View all</h2>
               </Link>
             </div>
           </Grid>
         </Grid>
         <ul style={{ listStyle: "none", height: 'auto', padding: '0px 40px' }}>
-          <Grid container justify='center' spacing={3}>
+          <Grid container justify='flex-start' spacing={3}>
             {elementsForView}
+            <Grid item xs={12} sm={6} md={2}>
+              <li style={{display: this.state.showMoreDisplay}}>
+                <AuthorCard
+                  itemName={'show more...'}
+                  height={120} width='100%'
+                  action={this.getNextPage}
+                />
+              </li>
+            </Grid >
           </Grid>
         </ul>
       </div>
     );
   }
 
-  getAuthors = async () => {
-    const response = await fetch("http://localhost:3001/api/authors/");
+  getAuthors = async (limit) => {
+    let url;
+    if(limit){
+      url = `http://localhost:3001/api/authors?limit=${limit}`;  
+    } else {
+      //TO DO fix this
+      const responseForLimit = await fetch(`http://localhost:3001/api/authors?limit=0`);
+      const resForLimit = await responseForLimit.json();
+      url = `http://localhost:3001/api/authors?limit=${resForLimit.total}`;
+    }
+
+    const response = await fetch(url)
     const res = await response.json();
+    console.log('there is res')
+    console.log(res)
     return res;
   };
+  
+  getNextPage = async (itemName) => {
+    console.log('qqqqqqqqqqqqqqqqq')
+  }
 }
+
+
 
 export default AuthorApp;

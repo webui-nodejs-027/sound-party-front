@@ -86,7 +86,6 @@ const useStyles = makeStyles(theme => ({
 export default function MainCard(props) {
   const classes = useStyles();
   const cardType = props.cardType;
-  console.log(classes.image)
 
   return (
     <div className={classes.root}>
@@ -99,7 +98,7 @@ export default function MainCard(props) {
             width: images[cardType].width,
           }}
         >
-          <spanx  
+          <span  
             className={classes.imageSrc}
             style={{
               backgroundImage: `url(${images[cardType].url})`,
