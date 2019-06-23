@@ -94,7 +94,7 @@ export default function SongTable(props) {
       response = await fetch(
         `http://localhost:3001/api/songs?${props.searchBy}=${
           props.value
-        }page=${pageParam}&limit=${limitParam}&sortBy=${sortByParam}&order=${orderByParam}`
+        }&page=${pageParam}&limit=${limitParam}&sortBy=${sortByParam}&order=${orderByParam}`
       );
     } else {
       response = await fetch(
