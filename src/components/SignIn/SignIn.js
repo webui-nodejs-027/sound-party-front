@@ -41,7 +41,8 @@ const SignIn = (props) => {
         inputPassword,
         onHandleChangePassword,
         onHandleChangeEmail,
-        onHandleSubmitForm
+        onHandleSubmitForm,
+        error
     } = props;
     return (
         <Container component="main" maxWidth="xs">
@@ -58,6 +59,7 @@ const SignIn = (props) => {
                         required
                         fullWidth
                         value={inputEmail}
+                        error={error}
                         onChange={onHandleChangeEmail}
                         id="email"
                         label="Email Address"
@@ -71,6 +73,7 @@ const SignIn = (props) => {
                         required
                         fullWidth
                         name="password"
+                        error={error}
                         onChange={onHandleChangePassword}
                         value={inputPassword}
                         label="Password"

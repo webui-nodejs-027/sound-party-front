@@ -6,10 +6,9 @@ import NotFound from './components/NotFound/NotFound';
 import Playlists from './components/playlists/Playlist';
 import FindPeople from './components/SamePeopleComponent/SamePeople';
 import MainPage from './components/MainPage/MainPage';
-import Songs from './components/songs/index';
-import Meeting from './components/Meeting/SearchM';
-import AdminPage from './components/AdminPage/AdminPage';
-
+import Songs from './components/Songs/index';
+import Meeting from './components/Meeting/SearchM'
+import AdminPage from "./components/AdminPage/AdminPage";
 
 const config = [
     {
@@ -37,7 +36,7 @@ const config = [
             },
             {
                 name: 'Songs',
-                path: '/main/songs',
+                path: '/main/Songs',
                 component: Songs
             },
             {

@@ -9,6 +9,9 @@ export const images = {
     title: 'Meet your friends',
     width: '90%',
   },
+    music : {
+        url : './music/test.mp3'
+    }
 };
 
 const gradients = [
