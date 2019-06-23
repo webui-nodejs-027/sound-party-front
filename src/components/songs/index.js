@@ -1,11 +1,10 @@
 import React from 'react';
-import SongTable from './table';
-// import AuidoPlayer from './audioPlayer';
+import SongTable from './SongTable';
+
 export default function Song() {
   return (
     <div>
       <SongTable />
-      {/*<AuidoPlayer />*/}
     </div>
   );
 }

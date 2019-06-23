@@ -6,7 +6,7 @@ import NotFound from './components/NotFound';
 import Playlists from './components/playlists/Playlist'
 import FindPeople from './components/SamePeopleComponent/SamePeople';
 import MainPage from './components/MainPage/MainPage';
-import Songs from './components/songs/index';
+import Songs from './components/Songs/index';
 import Meeting from './components/Meeting/SearchM'
 import CrudTables from "./components/Cruds/CrudTables";
 
