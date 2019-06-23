@@ -72,7 +72,7 @@ class GenreApp extends React.Component {
         <ul style={{ listStyle: "none", height: 'auto', padding: "0px 40px", marginTop: 0 }}>
           <Grid container justify="flex-start" spacing={3}>
             {elementsForView}
-            <Grid item xs={12} sm={6} md={2} style={{display: showMoreDisplay}}>
+            {/* <Grid item xs={12} sm={6} md={2} style={{display: showMoreDisplay}}>
               <li>
                 <GenreCard
                   itemName={'show more...'}
@@ -80,7 +80,7 @@ class GenreApp extends React.Component {
                   actiom={this.getNextPage}
                 />
               </li>
-            </Grid >
+            </Grid > */}
           </Grid>
         </ul>
       </div>
@@ -96,7 +96,9 @@ class GenreApp extends React.Component {
       //TO DO fix this
       const responseForLimit = await fetch(`http://localhost:3001/api/genres?limit=0`);
       const resForLimit = await responseForLimit.json();
-      url = `http://localhost:3001/api/genres?limit=${resForLimit.total}`;
+      let amount = resForLimit.total;
+      if(resForLimit.total > 17) {amount = 17}
+      url = `http://localhost:3001/api/genres?limit=${amount}`;
     }
 
     const response = await fetch(url)

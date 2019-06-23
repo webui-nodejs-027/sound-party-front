@@ -9,7 +9,13 @@ class AuthorApp extends React.Component {
     elementsForView: null,
     viewAllDisplay: 'block',
     showMoreDisplay: 'block',
-    limit: null
+    limit: null,
+
+    //TO DO fix this
+    pagination: {
+      page : 1,
+      limit: 10,
+    }
   };
 
   async componentDidMount() {
@@ -46,12 +52,12 @@ class AuthorApp extends React.Component {
         </Grid>
       );
     }
+    console.log(result)
     await this.setState({ elementsForView: result });
   };
 
   render() {
     const { elementsForView } = this.state;
-    console.log(this.state.showMoreDisplay)
     return (
       <div className="AuthorBlock" style={{ marginTop: '25px', height: 'auto'}}>
         <Grid container justify="flex-start" spacing={3}>
@@ -92,18 +98,49 @@ class AuthorApp extends React.Component {
       //TO DO fix this
       const responseForLimit = await fetch(`http://localhost:3001/api/authors?limit=0`);
       const resForLimit = await responseForLimit.json();
-      url = `http://localhost:3001/api/authors?limit=${resForLimit.total}`;
+      let amount = resForLimit.total;
+      if(resForLimit.total > 17) {amount = 17}
+      url = `http://localhost:3001/api/authors?limit=${amount}`;
+      this.setState({pagination: {limit : amount, page: this.state.pagination.page}})
     }
 
     const response = await fetch(url)
     const res = await response.json();
-    console.log('there is res')
-    console.log(res)
+    await this.setState({page: res.page, limit: res.limit})
     return res;
   };
   
+  //TO DO FIX THIS PLS
   getNextPage = async (itemName) => {
-    console.log('qqqqqqqqqqqqqqqqq')
+    let curList = await [...this.state.elementsForView];
+    console.log(this.state.pagination)
+
+    const response = await fetch(`http://localhost:3001/api/authors?page=${this.state.pagination.page + 1}&limit=${this.state.pagination.limit}`)
+    const res = await response.json();
+    await this.setElementsForView(res);
+    curList.push(...this.state.elementsForView);
+
+    let result = [];
+    for (let i = 0; i < res.data.length; i++) {
+      result[i] = (
+        <Grid key={res.data[i].id} item xs={12} sm={6} md={2}>
+          <Link style={{ textDecoration: 'none', color: 'black' }} to="/main/explore">
+            <li>
+              <AuthorCard
+                itemName={res.data[i].name}
+                itemId={res.data[i].id}
+                searchBy={this.searchBy}
+                height={120} width={'100%'}
+                handleElectItemSetter={this.props.handleElectItemSetter} />
+            </li>
+          </Link>
+        </Grid>
+      );
+    }
+
+    console.log(curList);
+    await this.setState({elementsForView: [curList, ...result], showMoreDisplay: 'none'});
+
   }
 }
 
