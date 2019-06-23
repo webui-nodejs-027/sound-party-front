@@ -1,13 +1,15 @@
 import React from 'react';
-import AuthWindow from './components/AuthWindow';
-import MainWindow from './components/MainWindow';
-import Profile from './components/Profile';
-import NotFound from './components/NotFound';
-import Playlists from './components/playlists/Playlist'
+import AuthWindow from './components/AuthWindow/AuthWindow';
+import MainWindow from './components/MainWindow/MainWindow';
+import Profile from './components/Profile/Profile';
+import NotFound from './components/NotFound/NotFound';
+import Playlists from './components/playlists/Playlist';
 import FindPeople from './components/SamePeopleComponent/SamePeople';
 import MainPage from './components/MainPage/MainPage';
 import Songs from './components/songs/index';
-import Meeting from './components/Meeting/SearchM'
+import Meeting from './components/Meeting/SearchM';
+import AdminPage from './components/AdminPage/AdminPage';
+
 
 const config = [
     {
@@ -53,7 +55,11 @@ const config = [
                 path: '/main/meting',
                 component: Meeting
             },
-
+            {
+                name: 'AdminPage',
+                path: '/main/admin',
+                component: AdminPage
+            }
         ]
     },
     {

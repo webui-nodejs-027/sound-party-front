@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Box, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
-import SignUp from './SignUp';
-import SignIn from './SignIn/SignInController';
-import PasswordResetForm from './PasswordResetForm';
+import SignUp from '../SignUp/SignUp';
+import SignIn from '../SignIn/SignInController';
+import PasswordResetForm from '../SignIn/PasswordResetForm';
 
 const useStyles = makeStyles( () => (
   {

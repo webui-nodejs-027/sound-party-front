@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, InputBase, Link } from '@material-ui/core';
-import { AccountCircle, Search, Input } from '@material-ui/icons';
+import { AccountCircle, Search, Input, SupervisedUserCircle } from '@material-ui/icons';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import { Link as RouterLink } from 'react-router-dom';
@@ -58,7 +58,18 @@ const Header = (props) => {
     localStorage.removeItem('token');
     window.location.replace('/');
   };
-
+  const adminLink = (
+    <Link
+      component={RouterLink}
+      to='/main/admin' >
+      <IconButton
+        title='Admin page'
+        className={classes.icon}
+      >
+        <SupervisedUserCircle />
+      </IconButton>
+    </Link>
+  );
   return (
     <Grid container justify='space-between' alignItems='center'>
       <Grid item>
@@ -78,20 +89,19 @@ const Header = (props) => {
         </div>
       </Grid>
       <Grid item>
+        {props.role === 1 ? adminLink : null}
         <Link
+          title='Profile'
           component={RouterLink}
           to='/main/profile' >
         <IconButton
-        aria-label='Show more'
-        aria-haspopup='true'
         className={classes.icon}
         >
             <AccountCircle />
       </IconButton>
         </Link>
         <IconButton
-          aria-label='Show more'
-          aria-haspopup='true'
+          title='Sign out'
           onClick={ handleSignOut }
           className={classes.icon}
         >

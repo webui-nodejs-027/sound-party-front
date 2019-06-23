@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Grid, TextField, Link } from "@material-ui/core";
-import Typography from "./SignIn/SignIn";
+import Typography from "./SignIn";
 
 const PasswordResetForm = (props) => {
   const [ email, setEmail ] = useState('');
