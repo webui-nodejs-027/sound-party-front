@@ -15,7 +15,7 @@ import {
 import { AddCircleOutlined } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core';
 import DataList from './DataList';
-import ModalDialog from '../ModalDialog/ModalDialog';
+import SongModalDialog from './SongModalDialog';
 
 const addresses = {
   songs: 'http://localhost:3001/api/songs',
@@ -63,6 +63,7 @@ const AdminPage = () => {
   const [ rowsPerPage, setRowsPerPage ] = useState(10);
   const [ total, setTotal ] = useState(0);
   const [ reload, setReload ] = useState(Math.random());
+  const [ open, setOpen ] = useState(false);
   const handleFetch = async (address, params) => {
     const addressWithParams = params ? address + params : address;
     const response = await fetch( addressWithParams, {
@@ -147,9 +148,15 @@ const AdminPage = () => {
                   className={classes.button}
                   variant='contained'
                   color='primary'
+                  onClick={() => setOpen(true)}
                 >
                   <AddCircleOutlined />
                 </Button>
+                <SongModalDialog
+                  open={open}
+                  setOpen={setOpen}
+                  data={entitiesData[value]}
+                />
               </TableCell>
             </TableRow>
             {dataList.length < 0 ? <p>Loading...</p> : dataList}

@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Dialog,
-  DialogTitle,
   List,
   ListItem,
   TextField,
@@ -13,25 +12,32 @@ import {
   Add as AddIcon,
   Home as HomeIcon
 } from '@material-ui/icons';
+import DropSelect from '../Meeting/AsyncSelect'
 
 const ModalDialog = (props) => {
   const { data } = props;
-
   const InputFields = Object.entries(data)
-    .map((el, index) => (
-      <ListItem style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-        <TextField
-          required
-          label={el[0]}
-          name={el[0]}
-          margin="normal"
-          variant="outlined"
-          key={data.id + index}
-          style={{ width: '300px' }}
-          onChange={ e => props.handleChange(e, props.window)}
-        />
-      </ListItem>
-    )
+    .map((el, index) => {
+      switch (el[0]) {
+        case 'id':
+          return null;
+        default:
+            return (
+              <ListItem style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                <TextField
+                  required
+                  label={el[0]}
+                  name={el[0]}
+                  margin="normal"
+                  variant="outlined"
+                  key={data.id + index}
+                  style={{ width: '300px' }}
+                  onChange={ e => props.handleChange(e, props.window)}
+                />
+              </ListItem>
+            );
+      }
+    }
   );
   const errorMessage = props.err ? <p style={{color: 'red'}}>{props.err}</p> : null;
   return (

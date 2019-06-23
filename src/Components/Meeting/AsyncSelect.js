@@ -8,7 +8,6 @@ export default class DropSelect extends Component {
         return fetch(`http://localhost:3001/api/${this.props.type}?limit=1000`)
             .then(response=>response.json())
             .then(result=> {
-
                 const options = result.data.map(elem=>{
                     elem.label = elem.name;
                     elem.value = elem.name;
