@@ -74,6 +74,10 @@ const MainWindow = (props) => {
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [search, setSearch] = useState('');
+    const [songs, setSongs] = useState({
+        songs: [],
+        autoplay: false
+    });
     const [user, setUser] = useState({
         firstName: '',
         lastName: '',
@@ -105,9 +109,18 @@ const MainWindow = (props) => {
         setUser(userData);
     };
 
+    const getSongs = async () => {
+        const response = await fetch('http://localhost:3001/api/songs');
+        const songsData = await response.json();
+        setSongs({
+            songs: songsData,
+            autoplay: false
+        });
+    };
+
     useEffect(() => {
-        getUser()
-            .catch(err => console.log(err));
+        getUser().catch(err => console.log(err));
+        getSongs().catch(err => console.log(err));
     }, [reload]);
 
     const [electItem, setElectItem] = useState({
@@ -171,6 +184,7 @@ const MainWindow = (props) => {
         let parentData = {
             auth: props.auth,
             setAuth: props.setAuth,
+            setSongs: setSongs,
             user: {...user},
             setReload: setReload
         };
@@ -244,7 +258,7 @@ const MainWindow = (props) => {
                 <Switch>
                     {routes}
                 </Switch>
-                <MusicPlayerContainer/>
+                <MusicPlayerContainer songs={songs}/>
             </main>
         </div>
     );
