@@ -101,13 +101,13 @@ export default class FormDialog extends React.Component {
         this.state = {
             open: false,
             title: props.meeting ? props.meeting.meeting : '',
-            address: '',
-            genre: '',
-            status: '',
-            author: '',
-            city: '',
+            address: props.meeting ? props.meeting.address : '',
+            genre: props.meeting ? props.meeting.genre : '',
+            status: props.meeting ? props.meeting.status : '',
+            author: props.meeting ? props.meeting.author : '',
+            city: props.meeting ? props.meeting.city : '',
             id: props.meeting ? props.meeting.id : '',
-            date: new Date().toISOString().slice(0, -8),
+            date: props.meeting ? props.meeting.date : '',
             showCreateError: false,
             meeting: props.meeting ? props.meeting : 'lala',
         };
@@ -162,23 +162,26 @@ export default class FormDialog extends React.Component {
             const date = new Date(e.target.value + stringEnding).toISOString();
             this.setState({
                 date,
-            })
+            });
+            console.log('date',this.state.date);
         }
     }
 
     handleUpdateClick() {
         try {
             const data = JSON.stringify({
-                name: this.state.title,
-                dateTime: this.state.date,
-                cityId: this.state.city.id,
-                address: this.state.address,
-                statusId: this.state.status.id,
-                genreId: this.state.genre.id,
-                // creatorId: this.getUserId()
+                name: this.state.title ? this.state.title : '',
+                dateTime: this.state.date ? this.state.date : '',
+                cityId: this.state.city ? this.state.city.id: '',
+                address: this.state.address ? this.state.address: '',
+                statusId: this.state.status ? this.state.status.id: '',
+                genreId: this.state.genre ? this.state.genre.id : '',
             });
 
-            fetch(`http://localhost:3001/api/meetings/${this.state.id}`, {
+
+            console.log('data', data);
+
+            fetch(`http://localhost:3001/api/meetings/${this.props.meeting ? this.props.meeting.id : ''}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -187,6 +190,7 @@ export default class FormDialog extends React.Component {
             })
                 .then(res => res.json())
                 .then(res => {
+                    console.log('result:', res);
                 })
         }
         catch(e){
@@ -194,6 +198,7 @@ export default class FormDialog extends React.Component {
                 this.setState({
                     showCreateError: true
                 })
+            console.log(e);
 
         }
     }
@@ -249,6 +254,13 @@ export default class FormDialog extends React.Component {
         console.log('state meeting from popup', this.state.meeting);
         const meeting = this.props.meeting;
         console.log(' meeting from popup', meeting);
+        const status = meeting ? meeting.status: 'lalal';
+        const statusId = status ? status.id: 'lalal';
+        console.log(statusId);
+
+        const genreDef = this.state.genre ? this.state.genre.name : '';
+
+        console.log(this.state.genre ? this.state.genre: 'lalalalallalala');
 
         return (
             <div>
@@ -268,7 +280,7 @@ export default class FormDialog extends React.Component {
                             label="Title"
                             type="text"
                             fullWidth
-                            defaultValue={meeting.meeting}
+                            defaultValue={meeting.meeting ? meeting.meeting : ''}
                             value = {this.state.title}
                             onChange={this.handleTitleChange}
                         />
@@ -278,42 +290,40 @@ export default class FormDialog extends React.Component {
                             label="Address"
                             type="text"
                             fullWidth
-                            defaultValue = {meeting.address}
+                            defaultValue = {meeting.address ? meeting.address : ''}
                             value={this.state.address}
                             onChange={this.handleAddressChange}
                         />
                         <DropSelect
-                            // defaultInputValue
+                            defaultInputValue={meeting.genre? meeting.genre.name: ''}
                             value={this.state.genre}
                             placeholder='Genre'
                             type='genres'
                             handleChange={this.handleGenreChange}
                         />
                         <DropSelect
-                            defaultInputValue='papapa'
-
+                            defaultInputValue={meeting.status? meeting.status.name: ''}
                             value={this.state.status}
-                            inputValue='kakaka'
                             placeholder='Status'
                             type='statuses'
                             handleChange={this.handleStatusChange}
                         />
                         <DropSelect
-                            defaultValue={meeting.author ? meeting.author.name : ''}
+                            defaultInputValue={meeting.author ? meeting.author.name : ''}
                             value={this.state.author}
                             placeholder='Author'
                             type='authors'
                             handleChange={this.handleAuthorChange}
                         />
                         <DropSelect
-                            // defaultValue={meeting.city.name}
+                            defaultInputValue={meeting.city? meeting.city.name: ''}
                             value={this.state.city}
                             placeholder='City'
                             type='cities'
                             handleChange={this.handleCityChange}
                         />
                         <DateAndTimePickers
-                             date={meeting.date}
+                             date={meeting.date ? new Date(meeting.date).toISOString().slice(0, -8) : ''}
                             onChange={this.handleDateChange}
                         />
                     </DialogContent>
