@@ -26,12 +26,20 @@ function SimpleTable(props) {
     const classes = useStyles();
     const m = props.meeting;
     const fullName = `${props.meeting.creator_firstName} ${props.meeting.creator_lastName}`;
+    console.log('props.meeting', props.meeting);
+
+    const date = new Date(props.meeting.meeting_dateTime);
+    const hours = date.getHours();
+    let minutes = date.getMinutes();
+    if (minutes < 10) {minutes='0'+minutes}
+    const time = `${hours}:${minutes}`;
     return (
         <Paper className={classes.root}>
             <Table className={classes.table}>
                 <TableHead>
                     <TableRow>
                         <TableCell align="center">Address</TableCell>
+                        <TableCell align="center">Time</TableCell>
                         <TableCell align="center">People</TableCell>
                         <TableCell align="center">Creator</TableCell>
                     </TableRow>
@@ -39,6 +47,7 @@ function SimpleTable(props) {
                 <TableBody>
                         <TableRow>
                             <TableCell align="center" scope="row">{m.meeting_address}</TableCell>
+                            <TableCell align="center">{time}</TableCell>
                             <TableCell align="center">{m.count}</TableCell>
                             <TableCell align="center">{fullName}</TableCell>
                         </TableRow>

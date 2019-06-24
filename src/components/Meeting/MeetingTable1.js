@@ -123,6 +123,14 @@ export default function EnhancedTable(props) {
                                 .map((row, index) => {
                                     // const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
+                                    const date = new Date(row.date);
+                                    const year = date.getFullYear();
+                                    let month = date.getMonth()+1;
+                                    if (month < 10) {month='0'+month}
+                                    let day = date.getDate();
+                                    if (day < 10) {day='0'+day}
+                                    const date1 = `${day}.${month}.${year}`;
+
 
                                     return (
                                         <TableRow
@@ -140,7 +148,7 @@ export default function EnhancedTable(props) {
                                             <TableCell align="right">{row.genre.name}</TableCell>
                                             <TableCell align="right">{row.author.name}</TableCell>
                                             <TableCell align="right">{row.city.name}</TableCell>
-                                            <TableCell align="right">{row.date}</TableCell>
+                                            <TableCell align="right">{date1}</TableCell>
                                             <TableCell align="right">{row.status.name}</TableCell>
                                             <TableCell align="right">
                                                 <Button
