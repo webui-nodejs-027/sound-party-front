@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import CreationPlaylist from "./CreationPlaylist";
 import PlaylistButton from "./PlaylistButton";
+import SongTable from "./Table";
 
 class AllPLaylistsGrid extends Component {
 
@@ -29,8 +30,13 @@ class AllPLaylistsGrid extends Component {
                onDeletePlaylist={onDeletePlaylist}
                onGetSongs={onGetSongs} />
             </Grid>
-          ))}
+            // < SongTable id={playlist.id} />
+           ))}
         </Grid>
+        < SongTable 
+        // id={playlist.id}
+         />
+     
       </div>
     );
   }

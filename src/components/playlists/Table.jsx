@@ -1,32 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Paper from '@material-ui/core/Paper';
-import PlayArrow from '@material-ui/icons/PlayArrow';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import PlayArrow from "@material-ui/icons/PlayArrow";
+// import AddSongToPlaylist from "./AddSongToPlaylist";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: "100%",
+    marginTop: theme.spacing(3)
+  },
+  paper: {
+    width: "100%",
+    marginBottom: theme.spacing(2)
+  },
+  table: {
+    minWidth: 750
+  },
+  tableWrapper: {
+    overflowX: "auto"
+  }
+}));
 
 const headRows = [
-  { id: 'play', sort: false, disablePadding: true, label: 'Play' },
-  { id: 'name', sort: false, disablePadding: true, label: 'Name' },
-  { id: 'singer', sort: false, disablePadding: false, label: 'Singer' },
-  { id: 'genre', sort: false, disablePadding: false, label: 'Genre' },
-  { id: 'year', sort: false, disablePadding: false, label: 'Year' },
-  { id: 'duration', sort: false, disablePadding: false, label: 'Duration' },
-  { id: 'add', sort: false, disablePadding: false, label: 'Add' }
+  { id: "play", sort: false, label: "Play" },
+  { id: "songName", sort: false, label: "Name" },
+  { id: "authorName", sort: false, label: "Singer" },
+  { id: "genre", sort: false, label: "Genre" },
+  { id: "year", sort: false, label: "Year" },
+  { id: "duration", sort: false, label: "Duration" },
+  { id: "delete", sort: false, label: "Delete" }
 ];
 
-function EnhancedTableHead(props) {
-  // const { order, orderBy, onRequestSort } = props;
-  // const createSortHandler = property => event => {
-  //   onRequestSort(event, property);
-  // };
+function EnhancedTableHead() {
 
   return (
     <TableHead>
@@ -34,17 +46,7 @@ function EnhancedTableHead(props) {
         {headRows.map(row => (
           <TableCell
             key={row.id}
-            align="left"
-            // sortDirection={orderBy === row.id ? order : false}
-          >
-            {/* <TableSortLabel
-              active={row.sort && orderBy === row.id}
-              direction={order}
-              onClick={createSortHandler(row.id)}
-              hideSortIcon={!row.sort}
-            >
-              {row.label}
-            </TableSortLabel> */}
+          >{row.label}
           </TableCell>
         ))}
       </TableRow>
@@ -52,156 +54,92 @@ function EnhancedTableHead(props) {
   );
 }
 
-EnhancedTableHead.propTypes = {
-  // onRequestSort: PropTypes.func.isRequired,
-  // order: PropTypes.string.isRequired,
-  // orderBy: PropTypes.string.isRequired
-};
+export default function SongTable(props){
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing(3)
-  },
-  paper: {
-    width: '100%',
-    marginBottom: theme.spacing(2)
-  },
-  table: {
-    minWidth: 750
-  },
-  tableWrapper: {
-    overflowX: 'auto'
-  }
-}));
-
-export default function SongTable() {
   const classes = useStyles();
-  // const [order, setOrder] = useState('asc');
-  // const [orderBy, setOrderBy] = useState('calories');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [data, setData] = useState([]);
+  const [songs, setSongs] = useState([]);
   const [total, setTotal] = useState(0);
+  
 
-  useEffect((id) => {
-    const getData = async () => {
-      const response = await fetch(`http://localhost:3001/api/playlists/${id}/songs`);
-      const result = await response.json();
-      setTotal(result.total);
-      setData(result.data);
-    };
-    getData();
+  useEffect(() => {
+    getSongs(1, rowsPerPage);
   }, []);
+
+
+   const getSongs = async ( pageParam, limitParam) => {
+    let response = null;
+
+    response = await fetch(`http://localhost:3001/api/playlists/1/songs?page=${pageParam}&limit=${limitParam}`);
+
+    const result = await response.json();
+    const emptySongs = [];
+    setSongs(emptySongs);
+    setTotal(result.total);
+    setSongs(result.data[0].songs);
+    }
 
   const handleMetadata = (event, index) => {
     const curDuration = event.target.duration;
-    const minutes = '0' + Math.floor(curDuration / 60);
-    const seconds = '0' + Math.floor(curDuration - minutes * 60);
-    const duration = minutes.substr(-2) + ':' + seconds.substr(-2);
-    data[index].duration = duration;
-    setData(prev => {
+    const minutes = "0" + Math.floor(curDuration / 60);
+    const seconds = "0" + Math.floor(curDuration - minutes * 60);
+    const duration = minutes.substr(-2) + ":" + seconds.substr(-2);
+    songs[index].duration = duration;
+    setSongs(prev => {
       return [
         ...prev.slice(0, index),
-        { ...prev[index], duration: duration },
+        { ...prev[index], duration },
         ...prev.slice(index + 1)
       ];
     });
   };
 
-  // const handleRequestSort = (event, property) => {
-  //   const isDesc = orderBy === property && order === 'desc';
-  //   let sortBy = '';
-  //   if (property === 'name') {
-  //     sortBy = 'songName';
-  //   } else if (property === 'singer') {
-  //     sortBy = 'authorName';
-  //   } else if (property === 'genre') {
-  //     sortBy = 'genre';
-  //   } else if (property === 'year') {
-  //     sortBy = 'year';
-  //   }
-  //   if (sortBy) {
-  //     const getData = async (sortBy, isDesc) => {
-  //       const response = await fetch(
-  //         `http://localhost:3001/api/songs?page=1&limit=${rowsPerPage}&sortBy=${sortBy}&order=${isDesc}`
-  //       );
-  //       const result = await response.json();
-  //       const emptyData = [];
-  //       setData(emptyData);
-  //       setData(result.data);
-  //     };
-  //     getData(sortBy, isDesc ? 'ASC' : 'DESC');
-  //     setPage(0);
-  //   }
-  //   setOrder(isDesc ? 'asc' : 'desc');
-  //   setOrderBy(property);
-  // };
-
   const handleChangePage = (event, newPage) => {
-    const getData = async (id) => {
-      const response = await fetch(
-        `http://localhost:3001/api/playlists/${id}/songs?page=${newPage +
-          1}&limit=${rowsPerPage}`
-      );
-      let result = await response.json();
-      const emptyData = [];
-      setData(emptyData);
-      setData(result.data);
-    };
-    getData();
+     getSongs(newPage + 1, rowsPerPage);
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = event => {
-    const getData = async (id) => {
-      const response = await fetch(
-        `http://localhost:3001/api/playlists/${id}/songs?page=1&limit=${+event.target.value}`
-      );
-      let result = await response.json();
-      const emptyData = [];
-      setData(emptyData);
-      setData(result.data);
-    };
-    getData();
-    setRowsPerPage(+event.target.value);
+     getSongs(1, event.target.value);
+    setRowsPerPage(event.target.value);
+    setPage(0);
   };
 
   return (
-    <div className={classes.root}>
+    
+      <div className={classes.root}>
       <Paper className={classes.paper}>
         <div className={classes.tableWrapper}>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size="medium"
-          >
-            {/* <EnhancedTableHead
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-            /> */}
+          <Table className={classes.table} size="medium">
+            <EnhancedTableHead/>
             <TableBody>
-              {data.map((row, index) => {
+
+              {songs.map((s, index) => {
+                
                 return (
-                  <TableRow hover key={row.id}>
+                  <TableRow hover key={s.id}>
                     <TableCell>
-                      <PlayArrow />
+                    <PlayArrow />
                     </TableCell>
-                    <TableCell align="left">{row.name}</TableCell>
-                    <TableCell align="left">{row.authorId.name}</TableCell>
-                    <TableCell align="left">{row.genreId.name}</TableCell>
-                    <TableCell align="left">{row.year}</TableCell>
-                    <TableCell align="left">
+                    <TableCell>{s.name}</TableCell>
+                    <TableCell>{s.authorId.name} </TableCell>
+                    <TableCell>{s.genreId.name}</TableCell>
+                    <TableCell>{s.year}</TableCell>
+
+                    <TableCell>
                       <audio
-                        src={`http://localhost:3001/music/${row.source}`}
+                        src={`http://localhost:3001/music/${s.source}`}
                         onLoadedMetadata={event => handleMetadata(event, index)}
                       />
-                      <span>{row.duration}</span>
-                    </TableCell>
-                    <TableCell align="left"><MoreVertIcon></MoreVertIcon></TableCell>
+                      <span>{s.duration}</span>
+                    </TableCell> 
+                    <TableCell>
+                      {/* <AddSongToPlaylist songId={song.id} /> */}
+                     </TableCell> 
                   </TableRow>
                 );
+                
               })}
             </TableBody>
           </Table>
@@ -212,12 +150,6 @@ export default function SongTable() {
           count={total}
           rowsPerPage={rowsPerPage}
           page={page}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page'
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page'
-          }}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
