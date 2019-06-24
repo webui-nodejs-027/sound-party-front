@@ -4,7 +4,7 @@ import {
   Switch
 } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
-import RouteWithSubRoutes from './Components/RouteWithSubRoutes';
+import RouteWithSubRoutes from './components/RouteWithSubroutes/RouteWithSubRoutes';
 import config from './routerConfig';
 
 function App() {

@@ -1,7 +1,7 @@
 import React from "react";
-import GenreApp from '../Genre/GenreApp'
-import AuthorApp from '../Author/AuthorApp'
-import MainCardApp from '../MainCard/MainCardApp'
+import GenreApp from './GenreApp'
+import AuthorApp from './AuthorApp'
+import MainCardApp from './MainCardApp'
 
 class MainPage extends React.Component {
 
@@ -9,8 +9,14 @@ class MainPage extends React.Component {
     return (
       <div className="MainBlock" >
         <MainCardApp/>
-        <GenreApp/>
-        <AuthorApp/>
+        <GenreApp handleElectItemSetter={this.props.handleElectItemSetter}
+          viewAllBtn={true} 
+          showMoreBtn={false}
+          limit={6}/>
+        <AuthorApp handleElectItemSetter={this.props.handleElectItemSetter} 
+          viewAllBtn={true}
+          showMoreBtn={false} 
+          limit={6}/>
       </div>
     );
   }

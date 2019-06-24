@@ -1,13 +1,17 @@
 import React from 'react';
-import AuthWindow from './Components/AuthWindow';
-import MainWindow from './Components/MainWindow';
-import Profile from './Components/Profile';
-import NotFound from './Components/NotFound';
-import Playlists from './Components/playlists/Playlist'
-import FindPeople from './Components/SamePeopleComponent/SamePeople';
-import MainPage from './Components/MainPage/MainPage';
-import Songs from './Components/songs/index';
-import Meeting from './Components/Meeting/SearchM'
+import AuthWindow from './components/AuthWindow/AuthWindow';
+import MainWindow from './components/MainWindow/MainWindow';
+import Profile from './components/Profile/Profile';
+import NotFound from './components/NotFound/NotFound';
+import Playlists from './components/playlists/Playlist';
+import FindPeople from './components/SamePeopleComponent/SamePeople';
+import MainPage from './components/MainPage/MainPage';
+import Genres from './components/MainPage/GenreApp';
+import Authors from './components/MainPage/AuthorApp';
+import Explore from './components/Explore/Explore';
+import Songs from './components/Songs/index';
+import Meeting from './components/Meeting/SearchM'
+import AdminPage from "./components/AdminPage/AdminPage";
 
 const config = [
     {
@@ -35,13 +39,28 @@ const config = [
             },
             {
                 name: 'Songs',
-                path: '/main/songs',
+                path: '/main/Songs',
                 component: Songs
             },
             {
                 name: 'FindPeople',
                 path: '/main/findpeople',
                 component: FindPeople
+            },
+            {
+                name: 'Genre',
+                path: '/main/genres',
+                component: Genres
+            },
+            {
+                name: 'Author',
+                path: '/main/authors',
+                component: Authors
+            },
+            {
+                name: 'Explore',
+                path: '/main/explore',
+                component: Explore
             },
             {
                 name: 'Playlist',
@@ -53,7 +72,11 @@ const config = [
                 path: '/main/meting',
                 component: Meeting
             },
-
+            {
+                name: 'AdminPage',
+                path: '/main/admin',
+                component: AdminPage
+            }
         ]
     },
     {
