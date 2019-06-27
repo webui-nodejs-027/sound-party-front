@@ -12,12 +12,13 @@ import Button from '@material-ui/core/Button';
 
 function convertData(data){
     return {
+        // data: data,
         meeting: data.name,
-        genre: data.genre ? data.genre.name : '',
-        author: data.author ? data.author.name : '',
-        city: data.city.name,
+        genre: data.genre ? data.genre : '',
+        author: data.author ? data.author: '',
+        city: data.city,
         date: data.dateTime,
-        status: data.status.name,
+        status: data.status,
         id: data.id ,
         address: data.address,
     };
@@ -28,7 +29,6 @@ const headRows = [
     { name: 'genre', disablePadding: false, label: 'Genre' },
     { name: 'author', disablePadding: false, label: 'Author' },
     { name: 'city', disablePadding: false, label: 'City' },
-    { name: 'address', disablePadding: false, label: 'Address'},
     { name: 'date', disablePadding: false, label: 'Date' },
     { name: 'status', disablePadding: false, label: 'Status' },
     { name: '', disablePadding: false, label: '' },
@@ -42,7 +42,7 @@ function EnhancedTableHead(props) {
                     <TableCell
                         key={row.name}
                         align={row.isMain ? 'left' : 'right'}
-                        padding={row.disablePadding ? 'none' : 'default'}
+                        padding={row.disablePadding ? '20px' : 'default'}
                         //sortDirection={orderBy === row.id ? order : false}
                     >
                         <TableSortLabel
@@ -70,7 +70,7 @@ function EnhancedTableHead(props) {
 const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
-        marginTop: theme.spacing(3),
+        // marginTop: theme.spacing(3),
     },
     paper: {
         width: '100%',
@@ -123,6 +123,14 @@ export default function EnhancedTable(props) {
                                 .map((row, index) => {
                                     // const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
+                                    const date = new Date(row.date);
+                                    const year = date.getFullYear();
+                                    let month = date.getMonth()+1;
+                                    if (month < 10) {month='0'+month}
+                                    let day = date.getDate();
+                                    if (day < 10) {day='0'+day}
+                                    const date1 = `${day}.${month}.${year}`;
+
 
                                     return (
                                         <TableRow
@@ -134,23 +142,22 @@ export default function EnhancedTable(props) {
                                             // selected={isItemSelected}
                                         >
 
-                                            <TableCell component="th" id={labelId} scope="row" padding="none">
+                                            <TableCell component="th" id={labelId} scope="row" padding="20px">
                                                 {row.meeting}
                                             </TableCell>
-                                            <TableCell align="right">{row.genre}</TableCell>
-                                            <TableCell align="right">{row.author}</TableCell>
-                                            <TableCell align="right">{row.city}</TableCell>
-                                            <TableCell align="right">{row.address}</TableCell>
-                                            <TableCell align="right">{row.date}</TableCell>
-                                            <TableCell align="right">{row.status}</TableCell>
+                                            <TableCell align="right">{row.genre.name}</TableCell>
+                                            <TableCell align="right">{row.author.name}</TableCell>
+                                            <TableCell align="right">{row.city.name}</TableCell>
+                                            <TableCell align="right">{date1}</TableCell>
+                                            <TableCell align="right">{row.status.name}</TableCell>
                                             <TableCell align="right">
                                                 <Button
-                                                    onClick={props.handleJoinMeeting.bind(this, row.id, index)}
+                                                    onClick={props.handleClickInfo.bind(this, row.id, row)}
                                                     meeting={row.id}
                                                     variant="contained"
-                                                    color="secondary"
+                                                    color="primary"
                                                     className={classes.button}>
-                                                JOIN
+                                                INFO
                                                 </Button>
                                             </TableCell>
 

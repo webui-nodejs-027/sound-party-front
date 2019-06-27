@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import CreationPlaylist from "./CreationPlaylist";
 import PlaylistButton from "./PlaylistButton";
+import SongTable from "./Table";
 
 class AllPLaylistsGrid extends Component {
 
@@ -11,6 +12,7 @@ class AllPLaylistsGrid extends Component {
       onCreate,
       onUpdateNamePlaylist,
       onDeletePlaylist,
+      onGetSongs
      } = this.props;
 
     return (
@@ -22,13 +24,19 @@ class AllPLaylistsGrid extends Component {
           {items.map((playlist) => (
             <Grid item key={playlist.id}>
               <PlaylistButton 
-              name={playlist.name}
+               name={playlist.name}
                id={playlist.id} 
                onUpdateNamePlaylist={onUpdateNamePlaylist}
-               onDeletePlaylist={onDeletePlaylist}/>
+               onDeletePlaylist={onDeletePlaylist}
+               onGetSongs={onGetSongs} />
             </Grid>
-          ))}
+            // < SongTable id={playlist.id} />
+           ))}
         </Grid>
+        < SongTable 
+        // id={playlist.id}
+         />
+     
       </div>
     );
   }

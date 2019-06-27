@@ -1,0 +1,12 @@
+.specialH1 {
+  font-size: 56px !important;
+  background: #373B44; 
+  background: -webkit-linear-gradient(to right, #4286f4, #373B44);
+  background: linear-gradient(to right, #4286f4, #373B44); 
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  margin-top: 50px;
+  margin-left: 100px;
+}

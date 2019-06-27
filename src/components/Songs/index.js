@@ -1,10 +1,10 @@
 import React from 'react';
 import SongTable from './SongTable';
 
-export default function Song() {
+export default function Song(props) {
   return (
     <div>
-      <SongTable />
+      <SongTable defaultSettings={props} />
     </div>
   );
 }
