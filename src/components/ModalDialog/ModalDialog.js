@@ -23,14 +23,20 @@ const ModalDialog = (props) => {
           return null;
         default:
             return (
-              <ListItem style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+              <ListItem
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center'
+                }}
+                key={index}
+              >
                 <TextField
                   required
                   label={el[0]}
                   name={el[0]}
                   margin="normal"
                   variant="outlined"
-                  key={data.id + index}
                   style={{ width: '300px' }}
                   onChange={ e => props.handleChange(e, props.window)}
                 />

@@ -13,7 +13,7 @@ import {
   Home as HomeIcon
 } from '@material-ui/icons';
 
-const SongModalDialog = (props) => {
+const CreateModalDialog = (props) => {
   const { data } = props;
   const InputFields = data[0] ? Object.entries(data[0])
     .map((el, index) => el[0] === 'id' ? null :
@@ -22,6 +22,7 @@ const SongModalDialog = (props) => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center'}}
+          key={index}
         >
           <TextField
             required
@@ -29,7 +30,6 @@ const SongModalDialog = (props) => {
             name={el[0]}
             margin="normal"
             variant="outlined"
-            key={data.id + index}
             style={{ width: '300px' }}
             onChange={ e => props.handleChange(e, props.window)}
           />
@@ -67,4 +67,4 @@ const SongModalDialog = (props) => {
   );
 };
 
-export default SongModalDialog;
+export default CreateModalDialog;

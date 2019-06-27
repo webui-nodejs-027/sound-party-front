@@ -50,11 +50,11 @@ const Profile = (props) => {
   });
   const [ err, setErr ] = useState(false);
   const { user } = props;
+  const [ values, setValues ] = useState(user);
   delete user.id;
   delete user.roleId;
   const { firstName, lastName, socialLink } = user;
   const changeableUser = { firstName, lastName, socialLink};
-  const [ values, setValues ] = useState(changeableUser);
   const [ password, setPassword ] = useState({oldpassword: '', password: ''});
   const profileFields = Object.entries(user);
 
@@ -94,7 +94,7 @@ const Profile = (props) => {
   };
 
   const handleDelete = async () => {
-    const result = await handleFetch(`${userAddress}/${getUserId()}`, 'DELETE');
+    await handleFetch(`${userAddress}/${getUserId()}`, 'DELETE');
     window.location.replace('/');
   };
 
@@ -143,7 +143,7 @@ const Profile = (props) => {
         </Button>
         <ModalDialog
           open={open.change}
-          data={values}
+          data={{...changeableUser}}
           err={err}
           window='change'
           handleClose={handleClose}

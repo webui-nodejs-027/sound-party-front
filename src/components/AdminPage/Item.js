@@ -84,7 +84,7 @@ const Item = (props) => {
         <p
           className={classes.text}
         >
-          {typeof el[1] === 'object' ? el[1].id : el[1]}
+          {typeof el[1] === 'object' ? el[1].name : el[1]}
         </p>
       </div>
     ));

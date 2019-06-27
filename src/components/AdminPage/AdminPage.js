@@ -15,7 +15,7 @@ import {
 import { AddCircleOutlined } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core';
 import DataList from './DataList';
-import SongModalDialog from './SongModalDIalog';
+import CreationComponent from "./CreationComponent";
 
 const addresses = {
   songs: 'http://localhost:3001/api/Songs',
@@ -28,7 +28,6 @@ const addresses = {
 
 const useStyles = makeStyles(() => ({
   box: {
-    height: '100vh',
     backgroundColor: '#cce6ff',
     padding: '20px'
   },
@@ -152,31 +151,32 @@ const AdminPage = () => {
                 >
                   <AddCircleOutlined />
                 </Button>
-                <SongModalDialog
+                <CreationComponent
                   open={open}
                   setOpen={setOpen}
-                  data={entitiesData[value]}
+                  data={entitiesData}
+                  value={value}
                 />
               </TableCell>
             </TableRow>
-            {dataList.length < 0 ? <p>Loading...</p> : dataList}
+            {dataList.length < 0 ? <TableCell><p>Loading...</p></TableCell> : dataList}
           </TableBody>
-          <TablePagination
-            rowsPerPageOptions={[10, 20, 30]}
-            component='div'
-            count={total}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            backIconButtonProps={{
-              'aria-label': 'Previous Page'
-            }}
-            nextIconButtonProps={{
-              'aria-label': 'Next Page'
-            }}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
         </Table>
+        <TablePagination
+          rowsPerPageOptions={[10, 20, 30]}
+          component='div'
+          count={total}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          backIconButtonProps={{
+            'aria-label': 'Previous Page'
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page'
+          }}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
       </Paper>
     </Box>
   )
