@@ -17,6 +17,12 @@ body {
     font-weight: normal
 }
 
+.red {
+    font-size: 20px;
+    color: rgb(181, 48, 57);
+    font-weight: bold;
+}
+
 .userSong-li {
     font-weight: bold;
     font-size: 16px;

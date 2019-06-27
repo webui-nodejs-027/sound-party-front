@@ -2,6 +2,7 @@ import React from 'react';
 import SamePeopleView from './SamePeopleView';
 import SameGanreSong from "./SameGanreSong";
 
+
 export default class SamePeople extends React.Component {
     constructor(props) {
         super(props);
@@ -29,30 +30,30 @@ export default class SamePeople extends React.Component {
     }
 
     async componentDidMount() {
-        const responseUsers = await fetch('http://localhost:3001/api/users/getUsersPercent',{
-            headers : {
-                Authorization : localStorage.getItem('token')
+        const responseUsers = await fetch('http://localhost:3001/api/users/getUsersPercent', {
+            headers: {
+                Authorization: localStorage.getItem('token')
             }
         });
         const dataResponseUsers = await responseUsers.json();
-        if(responseUsers.status === 400){
+        if (responseUsers.status === 400) {
             this.setState({
-                errorState : true
+                errorState: true
             });
         }
         this.setState({
             sameUsers: dataResponseUsers
         });
 
-        const responseMyStats = await fetch('http://localhost:3001/api/users/getUsersMusicStats',{
-            headers : {
-                Authorization : localStorage.getItem('token')
+        const responseMyStats = await fetch('http://localhost:3001/api/users/getUsersMusicStats', {
+            headers: {
+                Authorization: localStorage.getItem('token')
             }
         });
         const dataResponseMyStats = await responseMyStats.json();
-        if(responseMyStats.status === 400){
+        if (responseMyStats.status === 400) {
             this.setState({
-                errorState : true
+                errorState: true
             });
         }
         this.setState({
@@ -80,7 +81,7 @@ export default class SamePeople extends React.Component {
                 <>
                     <h2 className='h2-genre'>My stats </h2>
                     <div className='genre-card__container'>
-                        <SameGanreSong user={this.state.myStats[0]}/>
+                        <SameGanreSong key={this.state.myStats.length+2} user={this.state.myStats[0]}/>
                     </div>
                     {peopleView}
                 </>);

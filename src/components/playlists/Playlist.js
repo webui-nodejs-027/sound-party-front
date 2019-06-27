@@ -28,9 +28,9 @@ class Playlist extends Component {
     return JSON.parse(atob(payload)).id;
   };
 
-  async getPlaylists(userId) {
+  async getPlaylists() {
     const responseJSON = await fetch(
-      `http://localhost:3001/api/playlists/${userId}`,
+      `http://localhost:3001/api/playlists`,
       {
         method: "GET",
         headers: {
@@ -110,6 +110,7 @@ class Playlist extends Component {
           items={this.state.elementsView}
           onUpdateNamePlaylist={this.updatePlaylist}
           onDeletePlaylist={this.deletePlaylist}
+          //onGetSongs={ }
         />
       </div>
     );

@@ -1,11 +1,8 @@
 import React from 'react';
 import './samePeople.css';
-
-const Info = (props) => {
-    return <>
-        <p> {props.name} : {props.value}</p>
-    </>
-};
+import SimpleCard from "./SamePeopleCard";
+import Container from "@material-ui/core/Container/Container";
+import Grid from "@material-ui/core/Grid/Grid";
 
 class SameGanreSong extends React.Component {
     constructor(props) {
@@ -15,14 +12,14 @@ class SameGanreSong extends React.Component {
     render() {
         const songs = this.props.user.songs;
         const songInformation = songs.map((song, index) => {
-            let songCard = [];
-            for (let i in song) {
-                if (i !== 'genreId')
-                    songCard = [...songCard,
-                        <div className='allWidth' key={i}><Info name={i} value={song[i]}/></div>];
-
-            }
-            return <div className='genre-card'>{songCard}</div>;
+            const {genreId, ...songInformation} = song;
+            return (<>
+                <Grid key={index} item xs={3}>
+                    <Container>
+                        <SimpleCard key={index} songStatistic={songInformation}/>
+                    </Container>
+                </Grid>
+            </>)
         });
         return (<>
                 {songInformation}

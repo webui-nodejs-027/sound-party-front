@@ -8,6 +8,7 @@ import ProgressBar from './ProgressBar';
 import './samePeople.css';
 import UserInformation from './UserInformation';
 import SameGanreSong from './SameGanreSong';
+import Grid from "@material-ui/core/Grid/Grid";
 
 
 const useStyles = makeStyles(theme => ({
@@ -16,8 +17,6 @@ const useStyles = makeStyles(theme => ({
         background: '#5757b317',
 
     },
-    // font-size: 1.5em;
-// font-weight: bold
     heading: {
         fontSize:'1.5em',
         fontWeight: 'bold',
@@ -48,7 +47,8 @@ export default function ControlledExpansionPanels(props) {
                     id="panel1bh-header"
                 >
                     <Typography  className={classes.heading}>{userNameSurname}</Typography>
-                    <Typography > <ProgressBar percent={musicPercent}/>
+                    <Typography component={'span'} >
+                        <ProgressBar percent={musicPercent}/>
                         <span className={'hideText'}>-----------
                             -----------------------------------------------------------</span>
                     </Typography>
@@ -62,9 +62,9 @@ export default function ControlledExpansionPanels(props) {
                     {/*</Typography>*/}
                 </ExpansionPanelDetails>
                 <ExpansionPanelDetails className='tab-top'>
-                    <div className='genre-card__container'>
-                    <SameGanreSong user={props.user}/>
-                    </div>
+                    <Grid container justify="center" spacing={4}>
+                    <SameGanreSong key={props.user.user.id} user={props.user}/>
+                    </Grid>
                 </ExpansionPanelDetails>
             </ExpansionPanel>
         </div>
