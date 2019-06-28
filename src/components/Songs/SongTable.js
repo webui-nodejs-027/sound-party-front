@@ -147,19 +147,20 @@ function SongTable(props) {
     setPage(0);
   };
 
-  const handleChangeMusic = (song, index) => {
-    const takeSong = song;
-    let setSongs = [...songs];
-    setSongs.splice(index, 1);
-    setSongs.unshift(song);
-    const data = {
-      data: setSongs
+    const handleChangeMusic = (song, index) => {
+        const takeSong = song;
+        let setSongs = [...songs];
+        setSongs.splice(index, 1);
+        setSongs.unshift(song);
+        const data = {
+            data: setSongs,
+        };
+        props.defaultSettings.setSongs({
+            songs: data,
+            autoplay: true,
+            changeSong: true,
+        });
     };
-    props.defaultSettings.setSongs({
-      songs: data,
-      autoplay: true
-    });
-  };
 
   return (
     <div className={classes.root}>
