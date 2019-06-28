@@ -4,16 +4,32 @@ import CreationPlaylist from "./CreationPlaylist";
 import PlaylistButton from "./PlaylistButton";
 import SongTable from "./Table";
 
-class AllPLaylistsGrid extends Component {
 
+class AllPLaylistsGrid extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      idPlaylist: 1,
+      name: ""
+    };
+  };
+
+  setIdAndName = (id, name) => {
+    this.setState({idPlaylist:id}) ; 
+    this.setState({name:name}) ;
+
+  }
+   
   render() {
     const { 
       items,
       onCreate,
       onUpdateNamePlaylist,
       onDeletePlaylist,
-      onGetSongs
-     } = this.props;
+      onUpdateFavPlaylist, 
+      
+    } = this.props;
 
     return (
       <div>
@@ -26,17 +42,17 @@ class AllPLaylistsGrid extends Component {
               <PlaylistButton 
                name={playlist.name}
                id={playlist.id} 
+               isFavourite={playlist.favourite}
                onUpdateNamePlaylist={onUpdateNamePlaylist}
+               onUpdateFavPlaylist={onUpdateFavPlaylist}
                onDeletePlaylist={onDeletePlaylist}
-               onGetSongs={onGetSongs} />
+               onClick={()=>this.setIdAndName(playlist.id, playlist.name)}
+                />
             </Grid>
-            // < SongTable id={playlist.id} />
            ))}
         </Grid>
-        < SongTable 
-        // id={playlist.id}
-         />
-     
+        <p style={{fontSize:26, marginLeft:'44%', textTransform: 'uppercase'}} >{this.state.name}</p>
+        <SongTable id={this.state.idPlaylist}/>
       </div>
     );
   }
