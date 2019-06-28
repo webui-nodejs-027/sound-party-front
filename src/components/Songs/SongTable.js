@@ -156,7 +156,8 @@ export default function SongTable(props) {
         };
         props.defaultSettings.setSongs({
             songs: data,
-            autoplay: true
+            autoplay: true,
+            changeSong: true,
         });
     };
 
