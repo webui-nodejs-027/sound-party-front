@@ -109,6 +109,27 @@ const ModalDialog = (props) => {
               />
             </ListItem>
           );
+        case 'source':
+          return (
+            <ListItem
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center'
+              }}
+              key={index}
+            >
+              <TextField
+                required
+                type='file'
+                name={el[0]}
+                margin="normal"
+                variant="outlined"
+                style={{ width: '300px' }}
+                onChange={ e => props.handleChange(e, props.window)}
+              />
+            </ListItem>
+          );
         default:
           return (
             <ListItem
