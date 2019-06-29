@@ -9,6 +9,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import PlayArrow from "@material-ui/icons/PlayArrow";
+import ClearIcon from  "@material-ui/icons/Clear"
 // import AddSongToPlaylist from "./AddSongToPlaylist";
 
 const useStyles = makeStyles(theme => ({
@@ -55,7 +56,6 @@ function EnhancedTableHead() {
 }
 
 export default function SongTable(props){
-
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -64,20 +64,22 @@ export default function SongTable(props){
   
 
   useEffect(() => {
-    getSongs(1, rowsPerPage);
-  }, []);
+    getSongs(1, rowsPerPage); 
+  },[props.id]);
 
 
    const getSongs = async ( pageParam, limitParam) => {
     let response = null;
-
-    response = await fetch(`http://localhost:3001/api/playlists/1/songs?page=${pageParam}&limit=${limitParam}`);
+    response = await fetch(`http://localhost:3001/api/playlists/${props.id}/songs?page=${pageParam}&limit=${limitParam}`);
 
     const result = await response.json();
     const emptySongs = [];
     setSongs(emptySongs);
     setTotal(result.total);
-    setSongs(result.data[0].songs);
+    if(result.data.length > 0) {
+      setSongs(result.data[0].songs);
+    }
+    
     }
 
   const handleMetadata = (event, index) => {
@@ -105,6 +107,22 @@ export default function SongTable(props){
     setRowsPerPage(event.target.value);
     setPage(0);
   };
+
+  const deleteSong = async (idSong ) => {
+    let response = null;
+     response = await fetch(`http://localhost:3001/api/playlists/${props.id}/removesong/${idSong}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    const result = await response.json();
+    const emptySongs = [];
+    setSongs(emptySongs);
+    setSongs(result[0].songs);
+    }
 
   return (
     
@@ -135,7 +153,8 @@ export default function SongTable(props){
                       <span>{s.duration}</span>
                     </TableCell> 
                     <TableCell>
-                      {/* <AddSongToPlaylist songId={song.id} /> */}
+                      <ClearIcon 
+                      onClick={()=> deleteSong(s.id)}/>
                      </TableCell> 
                   </TableRow>
                 );

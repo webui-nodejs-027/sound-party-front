@@ -26,7 +26,6 @@ class CreationPlaylist extends Component {
     this.getUserId = this.getUserId.bind(this);
   }
 
-  
   getUserId = () => {
     const payload = localStorage
       .getItem('token')
