@@ -15,10 +15,10 @@ import {
 import { AddCircleOutlined } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core';
 import DataList from './DataList';
-import SongModalDialog from './SongModalDIalog';
+import CreationComponent from "./CreationComponent";
 
 const addresses = {
-  songs: 'http://localhost:3001/api/Songs',
+  songs: 'http://localhost:3001/api/songs',
   meetings: 'http://localhost:3001/api/meetings',
   users: 'http://localhost:3001/api/users',
   authors: 'http://localhost:3001/api/authors',
@@ -115,6 +115,29 @@ const AdminPage = () => {
     setRowsPerPage(parseInt(e.target.value));
   };
 
+  const addingComponent = value === 'users' || value === 'meetings' ? null :
+    (
+      <TableRow>
+        <TableCell className={classes.cell}>
+          <Button
+            className={classes.button}
+            variant='contained'
+            color='primary'
+            onClick={() => setOpen(true)}
+          >
+            <AddCircleOutlined />
+          </Button>
+          <CreationComponent
+            open={open}
+            setOpen={setOpen}
+            data={entitiesData}
+            value={value}
+            address={addresses[value]}
+            setReload={setReload}
+          />
+        </TableCell>
+      </TableRow>
+    );
 
   return (
     <Box className={classes.box}>
@@ -141,41 +164,25 @@ const AdminPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell className={classes.cell}>
-                <Button
-                  className={classes.button}
-                  variant='contained'
-                  color='primary'
-                  onClick={() => setOpen(true)}
-                >
-                  <AddCircleOutlined />
-                </Button>
-                <SongModalDialog
-                  open={open}
-                  setOpen={setOpen}
-                  data={entitiesData[value]}
-                />
-              </TableCell>
-            </TableRow>
-            {dataList.length < 0 ? <p>Loading...</p> : dataList}
+            {addingComponent}
+            {dataList.length < 0 ? <TableCell><p>Loading...</p></TableCell> : dataList}
           </TableBody>
-          <TablePagination
-            rowsPerPageOptions={[10, 20, 30]}
-            component='div'
-            count={total}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            backIconButtonProps={{
-              'aria-label': 'Previous Page'
-            }}
-            nextIconButtonProps={{
-              'aria-label': 'Next Page'
-            }}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
         </Table>
+        <TablePagination
+          rowsPerPageOptions={[10, 20, 30]}
+          component='div'
+          count={total}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          backIconButtonProps={{
+            'aria-label': 'Previous Page'
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page'
+          }}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
       </Paper>
     </Box>
   )
