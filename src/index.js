@@ -6,10 +6,18 @@ import fetchIntercept from 'fetch-intercept';
 
 fetchIntercept.register({
   request: function (url, config) {
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('token')
-    };
+    let headers = null;
+    let songUrl = [/^http:\/\/localhost:3001\/api\/songs\/upload-file$/, /^http:\/\/localhost:3001\/api\/songs\/\d+\/upload-file$/];
+    if(songUrl[0].test(url) || songUrl[1].test(url)) {
+      headers = {
+        'Authorization': localStorage.getItem('token')
+      };
+    } else {
+      headers = {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      };
+    }
     return [url, {
       ...config,
       headers
