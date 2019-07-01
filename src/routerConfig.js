@@ -69,7 +69,7 @@ const config = [
             },
             {
                 name: 'Meeting',
-                path: '/main/meting',
+                path: '/main/meeting',
                 component: Meeting
             },
             {

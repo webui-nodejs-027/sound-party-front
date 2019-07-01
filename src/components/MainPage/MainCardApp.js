@@ -18,7 +18,7 @@ class MainCardApp extends React.Component {
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <Link to=''>
+            <Link to='/main/meeting'>
               <CardTemplate cardType='meetings'/>
             </Link>
           </Grid>
