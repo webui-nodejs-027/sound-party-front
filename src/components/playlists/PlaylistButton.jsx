@@ -85,7 +85,8 @@ class PlaylistButton extends Component {
     this.handleClose();
   };
 
-  setFavourite = () => {
+  setFavourite = (e) => {
+    e.stopPropagation();
     const favourite = this.state.isFavourite;
     this.setState({ isFavourite: !favourite });
     
