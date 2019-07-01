@@ -3,8 +3,8 @@ import AllPlaylistsGrid from "./AllPlaylistsGrid";
 
 
 class Playlist extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       elementsView: [],
@@ -97,7 +97,7 @@ class Playlist extends Component {
           }
         }
       );
-      
+
       const playlists = await this.getPlaylists(this.getUserId());
       console.log(playlists);
       this.setState({ elementsView: playlists });
@@ -133,8 +133,9 @@ class Playlist extends Component {
           onUpdateNamePlaylist={this.updatePlaylist}
           onUpdateFavPlaylist={this.updateFavPlaylist}
           onDeletePlaylist={this.deletePlaylist}
+          defaultSettings={this.props}
         />
-        
+
       </div>
     );
   }

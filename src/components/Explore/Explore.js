@@ -4,6 +4,9 @@ import './Explore.css';
 import SongTable from '../Songs/SongTable'
 
 class Explore extends React.Component {
+  constructor(props){
+    super(props);
+  }
   state = {
     electedItem: null,
     totalSongs: null
@@ -38,7 +41,7 @@ class Explore extends React.Component {
 
         <div className="ExploreTable" style={{ height: 400 , width: '100%'}}>
           <Grid container justify="center" spacing={0}>
-            <SongTable searchBy={this.props.electItem.searchBy} value={this.props.electItem.itemName}/>
+            <SongTable defaultSettings={this.props} searchBy={this.props.electItem.searchBy} value={this.props.electItem.itemName}/>
           </Grid>
         </div>
 
