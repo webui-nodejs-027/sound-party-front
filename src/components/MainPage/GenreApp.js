@@ -61,7 +61,7 @@ class GenreApp extends React.Component {
           <Grid item xs={6}>
             <div className="viewAllLink" style={{ display: this.state.viewAllDisplay }}>
               <Link style={{ textDecoration: 'none' }} to="/main/genres">
-                <h2 style={{ textAlign: 'end', fontSize: '26px', marginRight: '50px', width: 'auto' }}> View all</h2>
+                <h2 style={{ textAlign: 'end', fontSize: '26px', marginRight: '50px', width: 'auto' , color: 'rgba(0, 0, 0, 0.87)' }}> View all</h2>
               </Link>
             </div>
           </Grid>
