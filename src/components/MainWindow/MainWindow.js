@@ -110,7 +110,7 @@ const MainWindow = (props) => {
     };
 
     const getSongs = async () => {
-        const response = await fetch('http://localhost:3001/api/songs');
+        const response = await fetch('http://localhost:3001/api/Songs');
         const songsData = await response.json();
         setSongs({
             songs: songsData,

@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import AllPlaylistsGrid from "./AllPlaylistsGrid";
 
+
 class Playlist extends Component {
   constructor() {
     super();
 
     this.state = {
-      elementsView: []
+      elementsView: [],
+      idPlaylist: 1,
     };
 
     this.getPlaylists = this.getPlaylists.bind(this);
@@ -14,6 +16,7 @@ class Playlist extends Component {
     this.updatePlaylist = this.updatePlaylist.bind(this);
     this.deletePlaylist = this.deletePlaylist.bind(this);
     this.getUserId = this.getUserId.bind(this);
+    this.updateFavPlaylist = this.updateFavPlaylist.bind(this);
   }
 
   async componentDidMount() {
@@ -28,9 +31,9 @@ class Playlist extends Component {
     return JSON.parse(atob(payload)).id;
   };
 
-  async getPlaylists(userId) {
+  async getPlaylists() {
     const responseJSON = await fetch(
-      `http://localhost:3001/api/playlists/${userId}`,
+      `http://localhost:3001/api/playlists`,
       {
         method: "GET",
         headers: {
@@ -58,6 +61,25 @@ class Playlist extends Component {
       const playlists = await this.getPlaylists(this.getUserId());
       console.log(playlists);
       this.setState({ elementsView: playlists });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async updateFavPlaylist({ id, field }) {
+    try {
+      const body = JSON.stringify({ favourite: field });
+      const response = await fetch(
+        `http://localhost:3001/api/playlists/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body
+        }
+      );
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -109,8 +131,10 @@ class Playlist extends Component {
           onCreate={this.create}
           items={this.state.elementsView}
           onUpdateNamePlaylist={this.updatePlaylist}
+          onUpdateFavPlaylist={this.updateFavPlaylist}
           onDeletePlaylist={this.deletePlaylist}
         />
+        
       </div>
     );
   }

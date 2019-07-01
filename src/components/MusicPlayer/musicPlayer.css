@@ -1,5 +1,6 @@
 .player {
     width: 90%;
+    max-width: 100%;
 }
 .player-cover {
     display: none;
@@ -31,4 +32,45 @@
 .player .player-control {
     flex: 1 1;
     background: #fafafa;
+}
+
+.player-container  {
+    max-width: 90%;
+    position: fixed;
+    bottom: 0;
+    height: 175px;
+    width: 90%;
+}
+
+.nextSong {
+    position: absolute;
+    bottom: 19px;
+    left: 53%;
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+}
+
+.prevSong {
+    position: absolute;
+    bottom: 19px;
+    left: 47%;
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+}
+
+.fa .fa-step-backward {
+    display: none;
+}
+.fa-step-backward:before {
+    content: '';
+}
+
+.fa-step-forward:before {
+    content: '';
 }
