@@ -48,10 +48,10 @@ const AdminPage = () => {
   const initial = {
     users: [],
     songs: [],
-    authors: [],
+    authors: [{name: ''}],
     meetings: [],
-    genres: [],
-    cities: []
+    genres: [{name: ''}],
+    cities: [{name: ''}]
   };
   const classes = useStyles();
   const [ value, setValue ] = useState('meetings');
@@ -88,14 +88,19 @@ const AdminPage = () => {
 
   const setEntities = async (entityName, params) => {
     const data = await handleFetch(addresses[entityName], params);
+    if (data.data.length === 0 && page > 0) {
+      setPage(page - 1);
+      setReload(Math.random());
+    }
+    const grantedData = data.data.length === 0 ? initial[entityName] : data.data;
     changeDataList(data.data);
-    setEntitiesData({...entitiesData, [entityName]: data.data});
+    setEntitiesData({...entitiesData, [entityName]: grantedData});
     setTotal(data.total);
     setLoaded(true);
   };
 
   useEffect( () => {
-    setEntities(value, '?page=1&limit=10&sortBy=id')
+    setEntities(value, `?page=${page + 1}&limit=${rowsPerPage}&sortBy=id`);
   }, [reload]);
 
   const handleChange = async (e, newValue) => {
@@ -112,6 +117,7 @@ const AdminPage = () => {
 
   const handleChangeRowsPerPage = e => {
     setEntities(value, `?page=1&limit=${e.target.value}&sortBy=id`);
+    setPage(0);
     setRowsPerPage(parseInt(e.target.value));
   };
 
