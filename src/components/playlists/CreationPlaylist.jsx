@@ -21,7 +21,8 @@ class CreationPlaylist extends Component {
 
     this.state = {
       open: false,
-      name: ""
+      name: "", 
+      disabled: true
     };
     this.getUserId = this.getUserId.bind(this);
   }
@@ -38,22 +39,31 @@ class CreationPlaylist extends Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, name:"", disabled: true });
+    
   };
 
   handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value , disabled:false });
   };
 
+checkValidation = () => {
 
+  return this.state.name.trim() !== "";
+}
   onCreatePlaylist = () => {
-    this.props.onCreate({
-      name: this.state.name,
-      isMain: false,
-      favourite: false,
-      userId: this.getUserId()
-    });
-    this.handleClose();
+    const isValid = this.checkValidation();
+    if (isValid) {
+      this.props.onCreate({
+        name: this.state.name,
+        isMain: false,
+        favourite: false,
+        userId: this.getUserId()
+      });
+      this.handleClose();
+    } else {
+      this.setState({disabled: true});
+    }  
   };
 
   render() {
@@ -97,6 +107,7 @@ class CreationPlaylist extends Component {
               color="primary"
               // eslint-disable-next-line react/jsx-no-duplicate-props
               onClick={this.onCreatePlaylist}
+              disabled={this.state.disabled}
             >
               Create
             </Button>

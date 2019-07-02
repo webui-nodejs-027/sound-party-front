@@ -76,10 +76,11 @@ export default function SongTable(props){
     const emptySongs = [];
     setSongs(emptySongs);
     setTotal(result.total);
-    if(result.data.length > 0) {
-      setSongs(result.data[0].songs);
-    }
-    
+    console.log(result.total);
+    console.log(result.data)
+    if(result.total > 0) {
+      setSongs(result.data);
+     }
     }
 
   const handleMetadata = (event, index) => {

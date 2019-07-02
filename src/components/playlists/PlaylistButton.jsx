@@ -35,7 +35,8 @@ class PlaylistButton extends Component {
       openDelete: false,
       name: "",
       isFavourite: false,
-      color: "inherit"
+      color: "inherit",
+      disabled: true
     };
   }
 
@@ -59,7 +60,7 @@ class PlaylistButton extends Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, disabled:true, name:'' });
   };
 
   handleCloseDelete = () => {
@@ -67,15 +68,24 @@ class PlaylistButton extends Component {
   };
 
   handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value, disabled:false });
   };
 
+  checkValidation = () => {
+  
+    return this.state.name.trim() !== "";
+  }
   onUpdateNamePlaylist = () => {
-    this.props.onUpdateNamePlaylist({
-      id: this.props.id,
-      field: this.state.name
-    });
-    this.handleClose();
+    const isValid = this.checkValidation();
+    if (isValid) {
+      this.props.onUpdateNamePlaylist({
+        id: this.props.id,
+        field: this.state.name
+      });
+      this.handleClose();
+    } else {
+      this.setState({disabled: true});
+    }
   };
 
   onDeletePlaylist = () => {
@@ -151,6 +161,7 @@ class PlaylistButton extends Component {
               color="primary"
               // eslint-disable-next-line react/jsx-no-duplicate-props
               onClick={this.onUpdateNamePlaylist}
+              disabled={this.state.disabled}
             >
               Update
             </Button>

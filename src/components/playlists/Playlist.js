@@ -48,7 +48,7 @@ class Playlist extends Component {
   async updatePlaylist({ id, field }) {
     try {
       const body = JSON.stringify({ name: field });
-      const response = await fetch(
+      await fetch(
         `http://localhost:3001/api/playlists/${id}`,
         {
           method: "PUT",
@@ -59,9 +59,7 @@ class Playlist extends Component {
         }
       );
       const playlists = await this.getPlaylists(this.getUserId());
-      console.log(playlists);
       this.setState({ elementsView: playlists });
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +68,7 @@ class Playlist extends Component {
   async updateFavPlaylist({ id, field }) {
     try {
       const body = JSON.stringify({ favourite: field });
-      const response = await fetch(
+     await fetch(
         `http://localhost:3001/api/playlists/${id}`,
         {
           method: "PUT",
@@ -80,7 +78,8 @@ class Playlist extends Component {
           body
         }
       );
-      console.log(response);
+      const playlists = await this.getPlaylists(this.getUserId());
+      this.setState({ elementsView: playlists });
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +87,7 @@ class Playlist extends Component {
 
   async deletePlaylist({ id }) {
     try {
-      const response = await fetch(
+       await fetch(
         `http://localhost:3001/api/playlists/${id}`,
         {
           method: "DELETE",
@@ -99,9 +98,7 @@ class Playlist extends Component {
       );
       
       const playlists = await this.getPlaylists(this.getUserId());
-      console.log(playlists);
       this.setState({ elementsView: playlists });
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -110,7 +107,7 @@ class Playlist extends Component {
   async create({ name, isMain, favourite, userId }) {
     try {
       const body = JSON.stringify({ name, isMain, favourite, userId });
-      const response = await fetch(`http://localhost:3001/api/playlists`, {
+      await fetch(`http://localhost:3001/api/playlists`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -119,7 +116,6 @@ class Playlist extends Component {
       });
       const playlists = await this.getPlaylists(this.getUserId());
       this.setState({ elementsView: playlists });
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
