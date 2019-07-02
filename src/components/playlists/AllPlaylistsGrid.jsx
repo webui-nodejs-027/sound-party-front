@@ -20,7 +20,7 @@ class AllPLaylistsGrid extends Component {
   };
 
   setIdAndName = (id, name) => {
-    this.setState({idPlaylist:id}) ; 
+    this.setState({idPlaylist:id}) ;
     this.setState({name:name}) ;
 
   }
@@ -34,14 +34,14 @@ class AllPLaylistsGrid extends Component {
     }
 
   }
-   
+
   render() {
-    const { 
+    const {
       items,
       onCreate,
       onUpdateNamePlaylist,
       onDeletePlaylist,
-      onUpdateFavPlaylist, 
+      onUpdateFavPlaylist,
     } = this.props;
     const filteredItems = items.filter(item => this.state.onlyFav ? item.favourite : true);
 
@@ -53,9 +53,9 @@ class AllPLaylistsGrid extends Component {
           </Grid>
           {filteredItems.map(playlist => (
             <Grid item key={playlist.id}>
-              <PlaylistButton 
+              <PlaylistButton
                   name={playlist.name}
-                  id={playlist.id} 
+                  id={playlist.id}
                   isFavourite={playlist.favourite}
                   onUpdateNamePlaylist={onUpdateNamePlaylist}
                   onUpdateFavPlaylist={onUpdateFavPlaylist}
@@ -70,7 +70,7 @@ class AllPLaylistsGrid extends Component {
         <Switch onChange={this.onChangeFav}></Switch>
         </div>
         <p style={{fontSize:26, marginLeft:'44%', textTransform: 'uppercase'}} >{this.state.name}</p>
-        <SongTable id={this.state.idPlaylist}/>
+        <SongTable defaultSettings={this.props.defaultSettings} id={this.state.idPlaylist}/>
       </div>
     );
   }
