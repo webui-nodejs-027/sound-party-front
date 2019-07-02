@@ -47,7 +47,13 @@ const useStyles = makeStyles(() => ({
 const AdminPage = () => {
   const initial = {
     users: [],
-    songs: [],
+    songs: [{
+      name: '',
+      source: '',
+      year: '',
+      authorId: '',
+      genreId: '',
+    }],
     authors: [{name: ''}],
     meetings: [],
     genres: [{name: ''}],
